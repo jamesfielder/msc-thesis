@@ -8,6 +8,15 @@
 % Remove the twoside option for single-sided printing
 \documentclass[12pt,MSc,twoside]{muthesis}
 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[colorlinks=true]{hyperref}
+
 \begin{document}
 \title{Golf Ball Aerodynamics}
 \author{James Fielder}
@@ -34,7 +43,7 @@ In this project we work on golf balls and stuff.
 % The next part is optional; however it is a good place to thank your
 % supervisor and the people responsible for providing computer support ;-)
 \prefacesection{Acknowledgements}
-I would like to thank
+I would like to thank my supervisor Prof. Jitesh Gajjar for his guidance during the project without which I would have been completely lost. Additionally, I would like to thank the Royal and Ancient Golf Club for their sponsorship of the project and Dr Steve Otto for his guidance and assistance.
 
 % The next line is NOT optional and MUST appear
 \afterpreface
@@ -44,24 +53,17 @@ I would like to thank
 % and all the new results that you have discovered
 
 \chapter{Introduction}
+\input{../tex-src/intro.tex}
 
+% \chapter{Some new theorems that give rise to a very long chapter name}
+% \chaptermark{Shortened chapter header}
 
-\chapter{Some new theorems that give rise to a very long chapter name}
-\chaptermark{Shortened chapter header}
+% % Comment the following THREE lines if you do NOT have an Appendix
+% \appendix
+% \chapter{A Long Proof}
+% .........
 
-\chapter{Conclusions}
-
-
-\begin{thebibliography}{999}
-\bibitem{ANO} A.N.~Other, ....
-\end{thebibliography}
-
-% Comment the following THREE lines if you do NOT have an Appendix
-\appendix
-\chapter{A Long Proof}
-.........
-
-% If you need more than one appendix, then just use another \chapter command
-%\chapter{Yet Another Appendix}
+% % If you need more than one appendix, then just use another \chapter command
+% %\chapter{Yet Another Appendix}
 
 \end{document}
