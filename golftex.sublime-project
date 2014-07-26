@@ -1,9 +1,5 @@
 {
-	"folders":
-	[
-		{
-			"follow_symlinks": true,
-			"path": "."
-		}
-	]
+	"options": {
+		"root": "official\\thesis.tex"
+	}
 }
