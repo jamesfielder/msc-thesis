@@ -17,7 +17,6 @@
 \usepackage{subcaption}
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[dvipsnames]{xcolor}
-\usepackage{microtype}
 
 % Stolen from wikipedia
 \hypersetup{
