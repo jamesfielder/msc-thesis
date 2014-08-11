@@ -497,10 +497,10 @@ institute of learning.}
 %% The \addvspace business below is to avoid the extra space that gets put
 %% in the tables of figures and tables between chapters (it makes no sense
 %% now that the numbering is continuous)
-\def\afterpreface{\newpage
-        \pagestyle{headings}}
+\def\afterpreface{\newpage}
+%        \pagestyle{headings}}
 
-\pagestyle{headings}
+%\pagestyle{headings}
 
 %% This produces the chapter title at the top of each page. It can be
 %% changed in the obvious way, e.g., \pagestyle{empty} or \pagestyle{plain}

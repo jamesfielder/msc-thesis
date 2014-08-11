@@ -18,6 +18,7 @@
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{microtype}
+\usepackage{nth}
 
 % Stolen from wikipedia
 \hypersetup{
@@ -40,6 +41,28 @@
     filecolor=magenta,      % color of file links
     urlcolor=cyan           % color of external links
 }
+
+% fancy header
+\usepackage{fancyhdr}
+% Normal enviroment is for non chapter heading pages. Need a geometry fix for the text running into the header. Turns out the fix is just to add the [headings]
+% option to fullpage! The gods of TeX smile upon me.
+\fancypagestyle{normal}{%
+  \fancyhf{}
+  \fancyhead[LE]{\rule[-2ex]{0pt}{2ex}\small \nouppercase{\leftmark}}
+  \fancyhead[RO]{\rule[-2ex]{0pt}{2ex}\small \nouppercase{\rightmark}}
+  \fancyfoot[L]{}
+  \fancyfoot[C]{\thepage}
+  \fancyfoot[R]{}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}}
+% Page style used on chapter starts by default but with the bottom edited to draw a line before the page number.
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[L]{}
+  \fancyfoot[C]{\thepage}
+  \fancyfoot[R]{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}}
 
 % Bibliography stuff
 \bibliographystyle{abbrvnat}
@@ -81,7 +104,7 @@ Golf Club for their sponsorship of the project and Dr Steve Otto for his guidanc
 
 % Finally, you can start writing about all the new theorems you have proved
 % and all the new results that you have discovered
-
+\pagestyle{normal}
 \chapter{Introduction}
 \input{../tex-src/intro.tex}
 
@@ -99,6 +122,6 @@ Golf Club for their sponsorship of the project and Dr Steve Otto for his guidanc
 % % If you need more than one appendix, then just use another \chapter command
 % %\chapter{Yet Another Appendix}
 
-\bibliography{overall}
+\bibliography{Golf-CFD,Golf-physics,Inverse_Problems}
 
 \end{document}
