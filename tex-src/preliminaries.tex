@@ -4,13 +4,29 @@ how the fluid flows over the surface of the ball is crucial to understanding the
 the flight of a golf ball and that of a standard projectile. Quantifying this effect will be a large
 component of this project.
 
-There is a large 
+There has been significant work done previously in understanding the fluid dynamics around a golf ball
+and how a golf ball flies. We will attempt to review some of this literature in this chapter and summarise
+previous work on the topic.
 
+First though, we must understand how normal projectiles fly without taking into account fluid dynamics effects.
 \section{Projectile Motion}
+A projectile is a body fired into the air by an initial impulse and then allowed to fall back to ground under the
+action of gravity alone. This is the most naive and simplistic model of golf ball flight, completely
+ignoring all aerodynamic effects, however we must understand it before building up to a more
+complex model.
 
-\section{Basic Aerodynamics}
-
+Consider motion in a 2 dimensional plane, labelled by $x$ along the horizontal and $y$ along the vertical
+A projectile is given an initial speed of the form $\vv_0 = (v_x, v_y)$ at an angle $\alpha$ to
+the horizontal. We set the origin of the coordinate system to be the point at the start of the
+trajectory, $(x_0, y_0) = (0,0)$. In this problem the acceleration on the projectile, after the initial
+impulse, is constant and of the form
 \begin{equation}
+a_x = 0, \quad a_y = -g
+\end{equation}
+where $g$ is the acceleration due to gravity. Since the acceleration is constant we can use
+the standard formulas for motion under constant acceleration to derive the dynamics of the
+projectile \citet{yandf}
+\section{Basic Aerodynamics}\begin{equation}
 \rho \matdef{\vec{q}} = - \nabla p + \mu \nabla^2 \vec{q} + f
 \end{equation}
 
