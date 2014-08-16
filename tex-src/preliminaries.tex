@@ -15,26 +15,98 @@ action of gravity alone. This is the most naive and simplistic model of golf bal
 ignoring all aerodynamic effects, however we must understand it before building up to a more
 complex model.
 
-Consider motion in a 2 dimensional plane, labelled by $x$ along the horizontal and $y$ along the vertical
+Consider motion in a 2 dimensional plane, labelled by $x$ along the horizontal and $y$ along the vertical.
 A projectile is given an initial speed of the form $\vv_0 = (v_x, v_y)$ at an angle $\alpha$ to
 the horizontal. We set the origin of the coordinate system to be the point at the start of the
 trajectory, $(x_0, y_0) = (0,0)$. In this problem the acceleration on the projectile, after the initial
 impulse, is constant and of the form
-\begin{equation}
+\begin{equation} \label{grav}
 a_x = 0, \quad a_y = -g
 \end{equation}
 where $g$ is the acceleration due to gravity. Since the acceleration is constant we can use
 the standard formulas for motion under constant acceleration to derive the dynamics of the
-projectile \citet{yandf}
+projectile \citet{yandf}, these are
 \begin{subequations} \label{suvat}
 \begin{align}
-v &= v_0 + at \\
-x &= v_0 t + \frac{1}{2} a t^2 \\
+v &= v_0 + at \label{v} \\
+x &= v_0 t + \frac{1}{2} a t^2 \label{xsuvat} \\
 v^2 &= v_0^2 + 2ax \\
-x &= \left(\frac{v_0 + v}{2}\right) t
+x &= \left(\frac{v_0 + v}{2}\right) t .
 \end{align}
 \end{subequations}
-\section{Basic Aerodynamics}\begin{equation}
+Where $v$ is the speed at a time $t$, $x$ is the distance from the origin of the coordinate system,
+$a$ is the acceleration and $v_0$ is the initial speed.
+
+We will write the equations in component form along the axes. Let $\vv_0$ be the initial velocity.
+In component form these will be
+\[
+v_{0x} = v_0 \cos \alpha
+\]
+along the $x$-axis and
+\[
+v_{0y} = v_0 \sin \alpha
+\]
+where $v_0 = |\vv_0|$ and $\alpha$ is the angle $\vv_0$ makes with the $x$-axis. Now using \eqref{grav}
+and \eqref{v} we may find
+\begin{subequations} \label{proj-v}
+\begin{align}
+v_x &= v_0 \cos \alpha \\
+\shortintertext{and}
+v_y &= v_0 \sin \alpha - gt . \label{proj-vy}
+\end{align}
+\end{subequations}
+
+Now, using \eqref{xsuvat} (or by integrating \eqref{proj-v} with respect to $t$), we can obtain the 
+standard formulas for the $x$ and $y$ positions during the flight of the projectile:
+\begin{subequations}
+\begin{align}
+x &= (v_0 \cos \alpha) t \label{proj-x} \\
+\shortintertext{and}
+y &= (v_0 \sin \alpha) t - \frac{1}{2} g t^2 \label{proj-y} .
+\end{align}
+\end{subequations}
+
+Eliminating $t$ between these equations demonstrates that projectiles follow parabolic
+paths, giving
+\begin{equation}
+y = x \tan \alpha - \frac{g}{2v_0^2 \cos^2 \alpha} x^2
+\end{equation}
+for the path of the projectile.
+
+Finally we may use these equations to find the maximum height, range and time of flight for a
+projectile. The maximum height is obtained when $v_y = 0$ and solving \eqref{proj-vy} with this
+condition gives
+\begin{equation} \label{proj-height}
+t_{H} = \frac{v_0 \sin \alpha}{g} .
+\end{equation}
+The range is obtained by solving for $y=0$ in \eqref{proj-y} and selecting the non trivial root for $t$
+of
+\begin{equation}
+t_{F} = \frac{2 v_0 \sin \alpha}{g}
+\end{equation}
+where $t_{F}$ is the time of flight for the projectile. Inserting this into \eqref{proj-x} gives
+\[
+x = \frac{2 v_0^2 \cos \alpha \sin \alpha}{g}
+\]
+and recalling that $\sin 2 \alpha = 2 \cos \alpha \sin \alpha$ gives
+\begin{equation}
+x = \frac{v_0^2 \sin 2 \alpha}{g}
+\end{equation}
+for the range of the projectile.
+\subsection{3D Projectile Motion}
+
+Projectile motion in 3 dimensions works in exactly the same fashion as 2D projectile motion. Here we
+will take the $z$-axis to be the vertical and $x$ and $y$ axes to be labelling the surface. The only
+component of acceleration is along the $z$-axis, with
+\[
+a_z = -g
+\]
+as before. All other equations remain the same.
+
+\section{Basic Aerodynamics}
+
+Of course, the flight of a golf ball is inevitably affected by aerodynamics 
+\begin{equation}
 \rho \matdef{\vec{q}} = - \nabla p + \mu \nabla^2 \vec{q} + f
 \end{equation}
 
