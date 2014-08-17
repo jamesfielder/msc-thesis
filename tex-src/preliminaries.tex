@@ -16,8 +16,7 @@ ignoring all aerodynamic effects, however we must understand it before building 
 complex model.
 
 Consider motion in a 2 dimensional plane, labelled by $x$ along the horizontal and $y$ along the vertical.
-A projectile is given an initial speed of the form $\vv_0 = (v_x, v_y)$ at an angle $\alpha$ to
-the horizontal. We set the origin of the coordinate system to be the point at the start of the
+A projectile is given an initial speed of the form $\vv_0 = (v_x, v_y)$. We set the origin of the coordinate system to be the point at the start of the
 trajectory, $(x_0, y_0) = (0,0)$. In this problem the acceleration on the projectile, after the initial
 impulse, is constant and of the form
 \begin{equation} \label{grav}
@@ -25,7 +24,7 @@ a_x = 0, \quad a_y = -g
 \end{equation}
 where $g$ is the acceleration due to gravity. Since the acceleration is constant we can use
 the standard formulas for motion under constant acceleration to derive the dynamics of the
-projectile \citet{yandf}, these are
+projectile \citet{yandf}, which are
 \begin{subequations} \label{suvat}
 \begin{align}
 v &= v_0 + at \label{v} \\
@@ -105,7 +104,43 @@ as before. All other equations remain the same.
 
 \section{Basic Aerodynamics}
 
-Of course, the flight of a golf ball is inevitably affected by aerodynamics 
+Of course, the flight of a golf ball is inevitably affected by aerodynamics. As such we need to have
+some understanding of fluid mechanics. In particular, we will need to understand how boundary layers
+form on and separate from the surface of the golf ball and how this effects the drag on the ball.
+First we will review some basic fluid mechanics.
+
+\subsection{Fluid Mechanics}
+
+In this project we will model the air flowing around the ball as being an incompressible fluid. This
+is an Eulerian description of fluid flow, viewing the fluid as though the ball is fixed in the centre
+of the coordinate system and the fluid moving around the ball \citet{Ruban2014}.
+
+We will not concern ourselves with a full discussion of fluid mechanics from basic principles here, 
+instead we will simply state some useful results predominantly following \citet{Ruban2014} and 
+\citet{sears}.
+
+Let $\vv$ be the fluid velocity, which is a function of the the position $\rvec$ from the origin of the
+coordinate system and of time $t$. Let $\rho$ be the density of the fluid. We define the material 
+derivative to be (as a differential operator)
+\begin{equation} \nonumber
+\frac{D}{Dt} = \frac{\partial}{\partial t} + (\vv \cdot \nabla)
+\end{equation}
+and represents the rate of change of some quantity within the fluid, while moving with a small element
+of the fluid flow. That is, in a description where the fluid moves relative to the coordinate system
+the material derivative measures the rate of change as seen by a moving fluid element.
+
+At all points within the fluid the mass continuity equation must apply
+\begin{equation} \label{mass-cont}
+\matdef{\rho} + \rho \nabla \cdot \vv = 0 .
+\end{equation}
+This equation encodes the condition that mass is conserved within a fluid without any sources or sinks.
+In an incompressible fluid, as we will be primarily conserved with in this project, $\rho$ will not
+change with time, and as such $D \rho / D t = 0$. As a consequence, both terms on the left hand side of
+\eqref{mass-cont} must be zero everywhere within the fluid, and therefore the equation reduces to
+\begin{equation} \label{incompress}
+\nabla \cdot \vv = 0
+\end{equation}
+for an incompressible fluid. 
 \begin{equation}
 \rho \matdef{\vec{q}} = - \nabla p + \mu \nabla^2 \vec{q} + f
 \end{equation}
