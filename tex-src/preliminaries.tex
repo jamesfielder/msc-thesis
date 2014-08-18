@@ -120,8 +120,8 @@ instead we will simply state some useful results predominantly following \citet{
 \citet{sears}.
 
 Let $\vv$ be the fluid velocity, which is a function of the the position $\rvec$ from the origin of the
-coordinate system and of time $t$. Let $\rho$ be the density of the fluid. We define the material 
-derivative to be (as a differential operator)
+coordinate system and of time $t$. Let $\rho$ be the density of the fluid and $p$ the pressure. 
+We define the material derivative to be (as a differential operator)
 \begin{equation} \nonumber
 \frac{D}{Dt} = \frac{\partial}{\partial t} + (\vv \cdot \nabla)
 \end{equation}
@@ -140,10 +140,58 @@ change with time, and as such $D \rho / D t = 0$. As a consequence, both terms o
 \begin{equation} \label{incompress}
 \nabla \cdot \vv = 0
 \end{equation}
-for an incompressible fluid. 
-\begin{equation}
-\rho \matdef{\vec{q}} = - \nabla p + \mu \nabla^2 \vec{q} + f
+for an incompressible fluid.
+
+The continuity equation gives one equation for the velocity components $u,v,w$\footnote{
+	The convention within fluid mechanics is that the $x,y,z$ velocity components are called $u,v,w$
+	respectively. That is \[
+		v_x = u, \qquad v_y = v, \qquad v_z = w .
+	\]
+} within a fluid. In order to specify the pressure and velocity everywhere we therefore require three
+more equations to determine the system. These three equations are supplied by considerations of
+energy and momentum conservation. Keeping all of these in mind, we may write a
+momentum equation in the form
+\begin{equation} \label{momentum}
+\rho \matdef{\vv} = - \nabla p + \mu \nabla^2 \vv + \ff
 \end{equation}
+where $\ff$ is body force per unit volume acting on the fluid (for example a gravitational force) 
+and $\mu$ is the viscosity of the fluid.
 
-\section{Boundary Layers}
+Equations \eqref{incompress} and \eqref{momentum} when taken together form the Navier-Stokes equations
+for the velocity and pressure fields within an incompressible fluid. It is well known that these
+equations are highly non-linear and exceedingly difficult to solve both analytically and numerically.
 
+The Navier-Stokes equations give rise to a number of fascinating effects within fluid dynamics. In this
+project, we are particularly interested in boundary layer effects and turbulence both of which are 
+resultant from considerations of the Navier-Stokes equations.
+
+\subsection{Non Dimensional Variables and the Reynolds Number}
+
+\subsection{Boundary Layers}
+
+One of the fundamental ideas within fluid mechanics is that of the no slip condition. The no slip 
+condition specifies that when a fluid encounters a solid body it must, at the surface of the body,
+take the velocity and temperature of that body. This means that there will be a thin layer of fluid
+around the body where the velocity changes from that of the overall stream to match the velocity of
+the solid body: this layer is referred to as the boundary layer.
+
+The equations which govern the flow within the boundary layer are a simplified version of the
+Navier-Stokes equations, taking into account the order of magnitude of the boundary layer compared to
+the size of the body. The derivation of these equations completed by scaling the Navier-Stokes 
+based on the assumption that the boundary layer is much smaller than the body size \citet{anderson}.
+
+In 2D these equations look as follows:
+\begin{subequations}
+\begin{align}
+\pd{u}{x} + \pd{v}{y} &= 0 &\text{(Continuity equation)} \\
+u\pd{u}{x} + v\pd{u}{y} &= -\frac{1}{\rho} \pd{p}{x} +
+\nu \spd{u}{y} &\text{($x$ momentum)} \\
+\frac{1}{\rho} \pd{p}{y} &= 0 &\text{($y$ momentum)}
+\end{align}
+\end{subequations}
+
+\subsection{Boundary Layer Separation and the Magnus Effect}
+
+\subsection{Lift and Drag}
+
+\section{Previous Work on Modelling Golf Ball Flight}
