@@ -159,13 +159,34 @@ and $\mu$ is the viscosity of the fluid.
 
 Equations \eqref{incompress} and \eqref{momentum} when taken together form the Navier-Stokes equations
 for the velocity and pressure fields within an incompressible fluid. It is well known that these
-equations are highly non-linear and exceedingly difficult to solve both analytically and numerically.
+equations are highly non-linear and exceedingly difficult to solve both analytically and numerically,
+except in special circumstances.
 
-The Navier-Stokes equations give rise to a number of fascinating effects within fluid dynamics. In this
-project, we are particularly interested in boundary layer effects and turbulence both of which are 
-resultant from considerations of the Navier-Stokes equations.
+From solutions the Navier-Stokes equations emerges a number of fascinating effects within fluid 
+dynamics. In this project, we are particularly interested in boundary layer effects and turbulence.
 
 \subsection{Non Dimensional Variables and the Reynolds Number}
+
+In physics we are often interested in understanding the behaviour of a system independent of the
+choice of units we have performed measurements with \citet{0143-0807-31-4-019}. Instead, we wish to
+have a system of measurement which does not depend intrinsically on one set on units, but on more 
+fundamental ideas such as length or mass. We desire this for two main reasons:
+\begin{itemize}
+	\item Physical statements should not have any dependency on the units they are stated in.
+	Non-dimensionalising the problem ensures that this is the case.
+	\item Using non-dimensional variables allow problems of different scales to be compared to each 
+	other on an equal footing. Often the points when the physical behaviour of the system changes 
+	will depend on some non-dimensional parameter, as we will see with turbulence later.
+\end{itemize}
+
+In order to achieve this we must non-dimensionalise the problem. This non-dimensionalisation gives 
+rise to groupings of quantities known as non-dimensional parameters
+
+One such dimensionless grouping we will require considerably in this report will be the Reynolds
+number defined as 
+\begin{equation} \label{re-number}
+Re = \frac{\rho \vv L}{\mu}
+\end{equation}
 
 \subsection{Boundary Layers}
 
@@ -189,6 +210,7 @@ u\pd{u}{x} + v\pd{u}{y} &= -\frac{1}{\rho} \pd{p}{x} +
 \frac{1}{\rho} \pd{p}{y} &= 0 &\text{($y$ momentum)}
 \end{align}
 \end{subequations}
+where $\nu$ is the kinematic viscosity, defined as $\nu = \mu / \rho$.
 
 \subsection{Boundary Layer Separation and the Magnus Effect}
 
