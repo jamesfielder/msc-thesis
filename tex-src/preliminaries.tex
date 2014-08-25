@@ -105,7 +105,7 @@ as before. All other equations remain the same.
 \section{Basic Aerodynamics}
 
 Of course, the flight of a golf ball is inevitably affected by aerodynamics. As such we need to have
-some understanding of fluid mechanics. In particular, we will need to understand how boundary layers
+some understanding of how aerodynamic effects will . In particular, we will need to understand how boundary layers
 form on and separate from the surface of the golf ball and how this effects the drag on the ball.
 First we will review some basic fluid mechanics.
 
@@ -167,8 +167,8 @@ dynamics. In this project, we are particularly interested in boundary layer effe
 
 \subsection{Non Dimensional Variables and the Reynolds Number}
 
-In physics we are often interested in understanding the behaviour of a system independent of the
-choice of units we have performed measurements with \citet{0143-0807-31-4-019}. Instead, we wish to
+In physics we are often interested in understanding the behaviour of a system independent of a
+choice of units \citet{0143-0807-31-4-019}. Instead, we wish to
 have a system of measurement which does not depend intrinsically on one set on units, but on more 
 fundamental ideas such as length or mass. We desire this for two main reasons:
 \begin{itemize}
@@ -176,17 +176,61 @@ fundamental ideas such as length or mass. We desire this for two main reasons:
 	Non-dimensionalising the problem ensures that this is the case.
 	\item Using non-dimensional variables allow problems of different scales to be compared to each 
 	other on an equal footing. Often the points when the physical behaviour of the system changes 
-	will depend on some non-dimensional parameter, as we will see with turbulence later.
+	will depend on some non-dimensional parameter, as we will see with turbulence later \citet{jensen2013introducing}.
 \end{itemize}
 
-In order to achieve this we must non-dimensionalise the problem. This non-dimensionalisation gives 
-rise to groupings of quantities known as non-dimensional parameters
+Additionally, analysing the fundamental dimensions of a physical problem can yield information on the
+functional form of quantities within the model without having to use more advanced mathematical
+techniques to derive such results. By simply understanding the dependency on fundamental units we
+often can find interesting scaling laws for functions of interest.
 
-One such dimensionless grouping we will require considerably in this report will be the Reynolds
-number defined as 
-\begin{equation} \label{re-number}
-Re = \frac{\rho \vv L}{\mu}
+The fundamental dimensions (only those which will be useful in this project) are as follows:
+\begin{table}[h]
+\centering
+\begin{tabular}{l c}
+Dimension & Symbol \\
+\hline
+Length & $L$ \\
+Mass & $M$ \\
+Time & $T$
+\end{tabular}
+\caption[List of fundamental dimensions]{List of fundamental dimensions we will require in this report.}
+\end{table}
+
+Any quantities of interest can be written using these variables: for example, an area $A$ would have 
+the dimensions $[A] = L^2$ and a velocity $[V] = L/T$.
+
+Physical laws can, in general, be written as \citet{0143-0807-31-4-019}
+\begin{equation} \label{functional}
+q_{0} = f(q_1,q_2,\ldots,q_n)
 \end{equation}
+where $q_0$ is a physical quantity we are interested in obtaining, $q_1,\ldots,q_n$ are independent
+physical quantities and $f$ is a functional relationship between them.
+
+When analysing the dimensions of a problem we must ensure that the following conditions are
+satisfied
+\begin{itemize}
+\item Both sides of \eqref{functional} must have the same fundamental dimensions.
+\item Any sum of $q_i$ must have the same dimensions.
+\item Any function of $q_i$ (say, exponential or trigonometric) must be dimensionless. This is as a 
+direct result of the last condition and being able to expand these functions as a power series.
+\end{itemize}
+
+We will demonstrate this technique in section~\ref{sec:drag}.
+
+One of the aims of dimensional analysis is to find groupings of physical quantities which are
+dimensionless. These have useful properties of scale invariance which leads to natural parameterisations
+for physical problems.
+
+Within fluid mechanics one such dimensionless grouping which manifests often is the Reynolds
+number, defined as 
+\begin{equation} \label{re-number}
+Re = \frac{\rho \vv L}{\mu} .
+\end{equation}
+This quantity represents the ratio of inertial forces to viscous ones, and we will make considerable
+use of it within the project. The Reynolds number, in some ways, can be considered to be a non
+dimensional analogue of the velocity, taking into account the intrinsic length scale of the problem
+under consideration.
 
 \subsection{Boundary Layers}
 
@@ -212,8 +256,119 @@ u\pd{u}{x} + v\pd{u}{y} &= -\frac{1}{\rho} \pd{p}{x} +
 \end{subequations}
 where $\nu$ is the kinematic viscosity, defined as $\nu = \mu / \rho$.
 
+\subsection{Lift and Drag} \label{sec:drag}
+
+In order to go beyond modelling golf ball flight as simply that of a projectile we must understand 
+how the lift and drag forces affect the flight of the ball. We can use dimensional analysis arguments
+to obtain a functional form for these effects. Here we follow the analysis of 
+\citet{jensen2013introducing} in order to demonstrate the analysis for the drag force. The lift is
+found in a similar way.
+
+One first must ask what physical terms we would expect the drag to have a dependency on. We would
+expect some dependency on the velocity $v$ of the object through the fluid, on the shape of the body and
+a characteristic length scale $r$ for the body, on the density of the fluid $\rho$, and finally on
+the viscosity of the fluid $\nu$. As noted in \citet{jensen2013introducing} we have no dependency from
+the mass of the body on the drag. As per the rest of this project we also assume the fluid is
+incompressible.
+
+Forming an equation in the style of \eqref{functional} between these quantities and the drag force 
+$D$ we obtain
+\begin{equation} \label{drag-dimensions}
+D = g \, v^{\alpha} r^{\beta} \rho^{\gamma} \nu^{\delta}
+\end{equation}
+where $g$ is a dimensionless constant which will take into account the shape of the body and
+potentially other dimensionless parameters such as the Reynolds number \eqref{re-number}.
+
+We attempt to obtain values of $\alpha, \beta, \gamma, \delta$ which balances \eqref{drag-dimensions}.
+The dimensions of the quantities in \eqref{drag-dimensions} are as follows:
+\begin{equation} \nonumber
+[D] = M L T^{-1}, \qquad [v] = L T^{-1}, \qquad [r] = L, \qquad [\rho] = M L^{-3}, \qquad [\nu] = M L^{-1} T^{-1}
+\end{equation}
+and so balancing \eqref{drag-dimensions} implies that
+\begin{equation}
+M L T^{-2} = M^{\gamma + \delta} L^{\alpha + \beta - 3\gamma - \delta} T^{-\alpha-\delta} .
+\end{equation}
+
+Equating the powers leads to a system of 3 linear equations in 4 variables for each fundamental unit
+given by
+\begin{subequations}
+\begin{align}
+1 &= \gamma + \delta \\
+1 &= \alpha + \beta - 3 \gamma - \delta \\
+-2 &= \alpha - \delta
+\end{align}
+\end{subequations}
+for $M, L$ and $T$ respectively.
+
+Using these equations we can eliminate all but one of the parameters, and writing all these in terms
+of $\delta$ we can find
+\begin{align}
+D &= g v^{2-\delta} r^{2-\delta} \rho^{1-\delta} \nu^{\delta} \\
+\shortintertext{and rearranging these powers}
+D &= g \rho r^2 v^2 \left(\frac{\nu}{\rho r v}\right)^{\delta} .
+\end{align}
+We can then recognise that the term in the brackets is $1/Re$. Following \citet{jensen2013introducing}
+we can derive, using a similar analysis, that $g$ must also have some functional dependency on the
+Reynolds number, and as such
+\begin{equation} \label{drag-functional}
+D = \rho r^2 v^2 f(Re) .
+\end{equation}
+The form of $f$ depends on the velocity of the body moving through the fluid. 
+
+In the low velocity limits of low and high velocity we find slightly different forms for the dependence 
+on velocity. In the low velocity limit, the dependency on velocity is only linear, that is
+\begin{equation}
+D = g \nu r v .
+\end{equation}
+where $g$ is simply related to the shape of the body. This is known as stokes drag, corresponding to
+laminar flow about the body.
+Whereas in the high velocity limit we would expect turbulent flow behind the body. This is the case
+which manifests during the flight of a golf ball, and the distinction will be important later.
+\begin{equation} \label{turb-drag}
+D = g \rho r^2 v^2
+\end{equation}
+
+On comparison with \eqref{drag-functional} we see that at low velocity, $f(Re) \propto Re^{-1}$
+and in the high velocity case $f(Re)$ is independent of $Re$.
+
+Within the literature related to fluid dynamics and aerodynamics \eqref{turb-drag} is normally written
+with different names for the variables, namely 
+\begin{equation} \label{drag}
+F_{D} = \frac{1}{2} \rho \vv^2 A c_{D}
+\end{equation}
+where $F_{D}$ is the drag force, and $c_{D}$ is the dimensionless drag coefficient. Is it this form
+we will use from here on. 
+
+An expression for the lift can be derived using very similar analysis, and has the same form as the
+drag:
+\begin{equation} \label{lift}
+F_{L} = \frac{1}{2} \rho \vv^2 A c_{L}
+\end{equation}
+where here $c_{L}$ is the lift coefficient.
 \subsection{Boundary Layer Separation and the Magnus Effect}
 
-\subsection{Lift and Drag}
+\citet{Seifert2012,Kharlamov2007}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.45]{../images/magnus.pdf}
+\caption[A diagram of the Magnus effect]{A diagram of the Magnus force on a rotating sphere.
+Adapted from \url{http://en.wikipedia.org/wiki/File:Sketch_of_Magnus_effect_with_streamlines_and_turbulent_wake.svg}.}
+\end{figure}
 
 \section{Previous Work on Modelling Golf Ball Flight}
+
+There has been considerable attention within the scientific literature to modelling the flight of a
+Golf Ball, both due to the considerably industry surrounding the game and the interesting fluid
+dynamics which results from Golf Ball flight.
+
+
+\citet{Bearman1976,Penner2003,Alam2011,Kensrud2010,Leong2007}
+
+\subsection{Computational Simulations of Golf Ball Flight}
+
+\citet{Smith2010,Beratlis2012Numerical}
+
+\section{Measuring Golf Ball Trajectories}
+
+\citet{Martin2012}
