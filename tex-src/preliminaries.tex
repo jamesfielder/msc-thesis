@@ -495,7 +495,42 @@ The authors state also state, with reference to the design of golf balls \citet[
 These two goals are virtually at opposite ends from each other and thus means the challenge of making
 a good golf ball for all ranges of speed in a typical game is very difficult.
 
+There are a number of papers exclusively on experimental measurements of drag and lift on golf balls, 
+for example \citet{Kharlamov2007Magnus}, \citet{Naruo2014}, \citet{Kray2012} and \citet{Aoki2010}.
+All of these papers show evidence for the drag crisis at lower Reynolds number than a smooth sphere,
+and for the Magnus effect on on flight. \citet{Aoki2010} gives a value for the transition to the
+supercritical drag regime as $Re = 0.5\times10^5$ which is slightly lower than the values given in
+other references. However, this can be accounted for by noting that this measurement is taken without
+rotation and potentially with a different ball to other references. Additionally, this paper contains
+direct measurements of the boundary layer separation on both sides of a rotating ball, and finds 
+excellent agreement between the expected behaviour and the real physical behaviour.
+
+\citet{Kray2012} focuses on the Magnus effect predominantly, and takes experimental measurements on
+larger spheres than a golf ball. However, these measurements are in a similar Reynolds number range
+to the case for golf and so the results here could be of some use. The authors also report observing
+the negative Magnus effect in their tests. However, some of the results within in this report are
+obtained using a sphere attached to two rods in a wind tunnel which could significantly affect the fluid flow
+in the boundary layer, a point the authors themselves concede.
+
+Finally, in \citet{Naruo2014} the effects of differing the depth of the dimpling on a golf ball is 
+explored at a range of flow speeds. The authors find that even small changes to the dimple configuration 
+(a change in depth of 0.035mm)
+can have large effects on the lift on the ball and thus the resultant trajectory. Additionally, the
+authors attempt a strategy with a ball with smaller dimples placed between the normal sized dimples
+a standard golf ball. They report a increase in the carry of the ball of approximately 8m. While we will not 
+investigate into the dimpling on the ball, it is interesting to see the directions that golf ball
+technology may advance in in the future.
+
 \subsection{Computational Simulations of Golf Ball Flight}
+
+Performing accurate computational simulations of the flow over a golf ball is a particularly large 
+challenge. The complex turbulent wake behind a golf ball, and the potential for the turbulent boundary
+layer, along with the rotation and high Reynolds numbers the flow typically operate in mean that any
+computational simulations will need both small time stepping and large mesh sizes to deal with the 
+resultant flow.
+
+It is only recently that such simulations have become feasible using super computers with large numbers
+of cpu cores and memory. 
 
 \citet{Smith2010,Beratlis2012Numerical}
 
