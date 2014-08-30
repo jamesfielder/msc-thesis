@@ -227,6 +227,8 @@ number, defined as
 \begin{equation} \label{re-number}
 Re = \frac{\rho \vv L}{\mu} .
 \end{equation}
+For a sphere, $\vv, \mu$ and $\rho$ are defined as they have already been in this text, and the
+characteristic length $L$ is defined to be the diameter of the sphere.
 This quantity represents the ratio of inertial forces to viscous ones, and we will make considerable
 use of it within the project. The Reynolds number, in some ways, can be considered to be a non
 dimensional analogue of the velocity, taking into account the intrinsic length scale of the problem
@@ -255,6 +257,11 @@ u\pd{u}{x} + v\pd{u}{y} &= -\frac{1}{\rho} \pd{p}{x} +
 \end{align}
 \end{subequations}
 where $\nu$ is the kinematic viscosity, defined as $\nu = \mu / \rho$.
+
+Boundary layer theory has been hugely important in the development of aerodynamics, taking previously
+intractable problems and facilitating a better understanding of the fluid dynamics of bodies 
+\citet{anderson}. The affect of the boundary layer will be important in the modelling of golf balls,
+as we will see later.
 
 \subsection{Lift and Drag} \label{sec:drag}
 
@@ -347,8 +354,68 @@ F_{L} = \frac{1}{2} \rho \vv^2 A c_{L}
 where here $c_{L}$ is the lift coefficient.
 \subsection{Boundary Layer Separation and the Magnus Effect}
 
-\citet{Seifert2012,Kharlamov2007}
+In addition to the drag forces which we have discussed in the previous section, there is another
+major effect from the motion of the fluid on golf ball trajectories: the Magnus effect. The Magnus
+effect is caused by the spin of the ball moving through the fluid medium, and accounts for large
+deviations from a trajectory not considering the effect \citet{Seifert2012}.
 
+In the Magnus effect, the boundary layer around the spinning body separates (in some literature this
+is called detaching instead) from the body and forms
+a wake behind the body.
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.3\textwidth}
+\begin{tikzpicture}
+\draw (0,0) circle (1.4);
+\node[label=Ball] at (0,-0.4) {};
+\draw[-open triangle 45] (1,1.8) -- (1,1);
+\draw[-open triangle 45] (-1,-1.8) -- (-1,-1);
+\node[label=Lower separation point] (l) at (0,-2.4) {};
+\node[label=Upper separation point] (u) at (0,1.5) {};
+\draw[draw=red,-triangle 90] (0.3,-0.3) -- (1.4,-1.4);
+\draw[draw=blue,-triangle 90] (-0.4,0) -- (-1.7, 0);
+\node at (0,-1) (one) {};
+\node at (-1,0) (two) {};
+\draw[draw=green] (two) edge[out=270,in=180,->] (one);
+\end{tikzpicture}
+\caption{Boundary layer separation}
+\end{subfigure}
+\quad \qquad
+\begin{subfigure}{.3\textwidth}
+\begin{tikzpicture}
+\draw (0,0) circle (1.4);
+\node[label=Ball] at (0,-0.4) {};
+\draw[-open triangle 45] (-1,1.8) -- (-1,1);
+\draw[-open triangle 45] (1,-1.8) -- (1,-1);
+\node[label=Lower separation point] (l) at (0,-2.4) {};
+\node[label=Upper separation point] (u) at (0,1.5) {};
+\draw[draw=red,-triangle 90] (0.3,0.3) -- (1.4,1.4);
+\draw[draw=blue,-triangle 90] (-0.4,0) -- (-1.7, 0);
+\node at (0,-1) (one) {};
+\node at (-1,0) (two) {};
+\draw[draw=green] (one) edge[out=180,in=270,->] (two);
+\end{tikzpicture}
+\caption{Reversed boundary layer separation}
+\end{subfigure}
+\caption[Diagram of the separation points in the Magnus Effect]{Here we see the two scenarios for
+boundary layer detachment. The red arrow indicates the direction which the detached boundary layer
+proceeds in, the blue the direction of the ball, and the green arrow the direction of spin of the
+ball.}
+\label{separation}
+\end{figure}
+
+The points at which the boundary layer separates from the body at the top and
+bottom of the ball make a significant difference to the direction in which the wake will point: if
+the boundary layer at the top of the ball separates later than the bottom (see a in Figure \ref{separation}) then we will have a positive Magnus effect, and the lift will be increased. In the opposite case, 
+where the bottom separates later than the top, we will have a negative Magnus effect 
+(see b in Figure \ref{separation}) and the lift on the ball will be decreased or potentially act to
+push the ball further towards the ground.
+
+The fluid behind the rotating sphere will become turbulent as the sphere leaves a gap which the wake
+refills as it passes. This mechanism is important while modelling the golf ball later, as the size
+of the turbulent wake will affect the drag on the ball.
+
+The streamlines over the ball can be visualised as such
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.45]{../images/magnus.pdf}
@@ -356,13 +423,77 @@ where here $c_{L}$ is the lift coefficient.
 Adapted from \url{http://en.wikipedia.org/wiki/File:Sketch_of_Magnus_effect_with_streamlines_and_turbulent_wake.svg}.}
 \end{figure}
 
+In this diagram we have lamina flow in the boundary layer over the ball. However, this is not always
+the case: when the flow becomes turbulent the drag can change considerably.
+
+\subsection{The Drag Crisis}
+
+When measuring the flow around a smooth sphere, one finds a curious phenomenon. At approximately
+$Re = 2\times10^5$ the drag coefficient on the sphere suddenly decreases from around $c_D = 0.4$ 
+to $c_D = 0.1$. This sudden change in drag is associated with the boundary layer around the sphere
+becoming turbulent and the wake behind the ball, as described before, becoming shorter and thinner as
+compared to the size of the ball.
+
+Modelling this transition to turbulence is incredibly difficult, even for smooth spheres, and is 
+incredibly difficult for the case of a dimpled golf ball. While there are some hints towards progress 
+in finding analytic solutions for this transition to turbulence for a smooth sphere 
+\citet{Assis2010Analytical},
+we must make do with measurements from experiments to get some idea of how this works.
+
+In \citet{Morrison2010} all experimental data for the drag on a smooth sphere is combined to give a
+formula for the drag in the Reynolds number range $Re = 1$ to $Re = 10^6$. This combined
+form exhibits the drag crisis drop at around $Re = 2\times10^5$ experiments have seen, and is given by
+\begin{equation}
+c_D = \frac{24}{Re} + \frac{2.6(Re/5)}{1 + (Re/5)^{1.52}} + \frac{0.411(Re/263000)^{-7.94}}{1+(Re/263000)^{-8.00}}
++ \frac{Re^{0.8}}{461000} .
+\end{equation}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{../images/morrison-drag.png}
+\caption[Plot of the Morrison drag formula]{A plot of the Morrison drag formula from $Re = 10^3$ to
+$Re=10^6$. Note the sudden drop in drag at around $Re = 2\times10^5$ as expected.}
+\end{figure}
+
+For a golf ball, the presence of dimples on the surface of the ball serves to reduce the Reynolds
+number at which the drag crisis occurs \citet{Alam2011}, moving the range of speeds where the golf
+ball is in the low drag (supercritical) region to within the capability of a human golfer to hit. This
+vast reduction in drag makes a large difference to the flight of a ball, and we will need to account
+for this affect in any model we form.
+
+The configuration of the dimples on the ball also has a large effect on the values of $Re$ at which 
+the drag crisis occurs, and the value of $c_D$ at either side of the drop \citet{Naruo2014}. There is
+a large variation between particular type of ball (see Figure 3 in \citet{Naruo2014}), which mean that
+individual balls can likely be characterised simply in terms of their drag function.
+
 \section{Previous Work on Modelling Golf Ball Flight}
 
-There has been considerable attention within the scientific literature to modelling the flight of a
-golf ball, both due to the considerably industry surrounding the game and the interesting fluid
+There has been considerable attention within the literature on the topic of modelling the flight of a
+golf ball, both due to the considerable industry surrounding the game and the interesting fluid
 dynamics which results from golf ball flight. A small selection of such papers are
 \citet{Smits2004,Bearman1976,Penner2003,Alam2011,Kensrud2010,Leong2007} however there are many more
 which could be discussed.
+
+The earliest of these papers is \citet{Bearman1976} which is one of the first attempts
+to understand the fluid dynamics over a golf ball and provide a model for the flight of a ball taking
+this into account. The drag crisis on a golf ball is shown in experimental data taken from an earlier
+paper and from measurements the authors made in a wind tunnel. These measurements were taken at a range
+of $Re$ values and spin values, providing a useful set data to correlate any findings against. The
+paper also emphasizes the importance of the dimples on the aerodynamic characteristics of the ball,
+in agreement with other papers.
+
+In \citet{Smits2004} the authors summarise the main effects one will find on golf ball trajectories,
+mentioning both the laminar and turbulent boundary layer we discussed previously, the effect of spin
+on the lift coefficient, and including some of the data from \citet{Bearman1976} to illustrate these
+points. The paper also suggests that much work still remains in understanding how the fluid dynamics
+over golf balls functions, saying that fundamentally balls are designed via empirical means, simply
+using the knowledge contained in the previous sections and experiments to improve the designs of balls.
+The authors state also state, with reference to the design of golf balls \citet[page 10]{Smits2004}:
+
+``The fundamental design challenge in optimizing golf ball aerodynamics is achieving the lower possible drag level at high Reynolds number while ensuring a high lift coefficient at the lowest Reynolds number in the design space.''
+
+These two goals are virtually at opposite ends from each other and thus means the challenge of making
+a good golf ball for all ranges of speed in a typical game is very difficult.
 
 \subsection{Computational Simulations of Golf Ball Flight}
 
