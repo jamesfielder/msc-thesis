@@ -1,19 +1,87 @@
-This section is about \citet{Robinson2013} and the comment \citet{Jensen2014Comment} and the 
-reply \citet{Robinson2014Reply}.
+The motion of a golf ball can fundamentally be viewed as a set of forces acting on the ball as it
+flies through the air. Before we can obtain a better understanding of the nature of the drag and lift,
+or characterise a ball by the lift and drag functions we find,
+obtaining a model for the forces acting on the ball during the flight is advisable. 
+
+Here, we follow the paper by \citet{Robinson2013}, which builds a model of the flight based on simple principles as
+we desire. This model does neglect some of the subtlety of the fluid dynamics we have discussed,
+but is a useful starting point for the analysis.
 
 \section{A Model for Golf Ball Flight}
 
-Describe the model, provide diagrams, show basic runs.
+In \citet{Robinson2013} the authors first discuss the assumptions and limitations of the model at hand.
+We will take the reverse to this approach, discussing the features of the model and then mentioning
+some of the potential improvements to the model and the drag and lift form they give.
 
-Model is a good comprimise between simplicity and flexibility. Can plug in new drag coefficents.
-Some parts of the model are purely heurestic like the form for the lift, others seem just plain wrong.
-The overall structure is good though. Compare basic run to data, show similar shape but incorrect
-carry.
+Additionally, the authors give a sample MATLAB script for the setup of the differential equations they
+derive and suggest using MATLAB to solve the resultant differential equations of the model numerically. 
+This sample code forms the bases of our initial investigations into the trajectories.
+
+\subsection{Lift and Drag}
+
+\citeauthor*{Robinson2013} start by initially discussing the lift and drag forces on a golf ball.
+They use the form of the lift and drag in the high Reynolds number limit, given by
+
+\begin{equation} \nonumber
+F_{D} = \frac{1}{2} \rho \vv^2 A c_{D}
+\end{equation}
+and
+\begin{equation} \nonumber
+F_{L} = \frac{1}{2} \rho \vv^2 A c_{L}
+\end{equation}
+
+The use of this form of equation is justified by the authors stating that there is experimental evidence
+that golf ball flight always occurs at $Re > 10^3$. We will examine this assumption later.
+
+\subsubsection{Drag}
+
+The authors give a form for $c_D$ based on the spin of the ball
+\begin{equation}
+c_D = 0.3 + 2.58\times10^{-4}\omega
+\end{equation}
+where $\omega$ is the modulus of $\vec{\omega}$ the spin vector, in radians per second. This is obtained 
+from experimental results found by
+\citet{davies1949aerodynamics}. However, the authors elect to take $c_D = 0.45$, rationalising that
+this simplification is most suited to the range of spins and speeds which golf balls are likely to
+take. The authors also mention the lack of experimental evidence they found to suggest better forms
+for $c_D$.
+
+\subsubsection{Lift}
+
+\citeauthor*{Robinson2013} make the following assumptions for the lift on the golf ball:
+\begin{itemize}
+\item The direction of the lift for is perpendicular to both $\omega$ and $\vv$, that is $\vec{F}_{L} \propto \omega \times \vv$.
+\item The lift is not a function of the drag.
+\end{itemize}
+
+They they go on to express the lift force as a vector quantity, given by
+\begin{equation}
+\vec{F}_{L} = \frac{1}{2} \rho A c_{L} V^2 \sin \theta \cdot \hat{n}
+\end{equation}
+and then using the definition of cross products rewrite this form as
+\begin{equation}
+\vec{F}_L = \frac{1}{2} \rho A c_L V \cdot \left(\frac{\vec{\omega} \times \vv}{\omega}\right)
+\end{equation}
+which is the form used in the model.
+
+As with $c_D$, the authors then use experimental data to inform their choice for $c_L$
+\subsection{Accounting for the Wind}
+
+\subsection{The Equations of Motion}
+
+% -------------
+
+% Describe the model, provide diagrams, show basic runs.
+
+% Model is a good comprimise between simplicity and flexibility. Can plug in new drag coefficents.
+% Some parts of the model are purely heurestic like the form for the lift, others seem just plain wrong.
+% The overall structure is good though. Compare basic run to data, show similar shape but incorrect
+% carry.
 
 \section{Limitations of the Model}
 
-Talk about the \citet{Jensen2014Comment} comment, dimensional analysis, lead into talking about why
-we need to improve this model to find a better form for $c_{D}$. Ppotentially a way to estimate the 
-spin ratio. Mention how \citet{Robinson2014Reply} addresses some of the concerns of the comment but does
-not give forms for $c_{D}$. Talk about how the golf ball is in the middle between the high and low
-reynold limits and this will require some matching modelling to find a good form.
+% Talk about the \citet{Jensen2014Comment} comment, dimensional analysis, lead into talking about why
+% we need to improve this model to find a better form for $c_{D}$. Ppotentially a way to estimate the 
+% spin ratio. Mention how \citet{Robinson2014Reply} addresses some of the concerns of the comment but does
+% not give forms for $c_{D}$. Talk about how the golf ball is in the middle between the high and low
+% reynold limits and this will require some matching modelling to find a good form.

@@ -530,10 +530,65 @@ computational simulations will need both small time stepping and large mesh size
 resultant flow.
 
 It is only recently that such simulations have become feasible using super computers with large numbers
-of cpu cores and memory. 
+of cpu cores and memory. Parallelisation of these methods means that systems with large numbers of
+cpu cores can dramatically cut down the time that such simulations take.
 
-\citet{Smith2010,Beratlis2012Numerical}
+The first paper to attempt a full simulation of the flow over a non spinning ball for a range of
+Reynolds numbers was \citet{Smith2010}. The authors use a fairly sophisticated discretisation method
+for the points within the domain, dividing them into interior points within the ball, forcing points
+directly on the boundary which have different boundary conditions, and fluid points. Each of these has
+different behaviour to the other, and some interpolation methods are used to bridge the gap between
+the values at each set of points. This methodology is used as the points do not have to fit around
+the boundary of the ball, allowing a much simpler Cartesian grid to be used instead of attempting to
+use a grid set in a spherical coordinate system with the ball.
 
+The solution is based on solving the full Navier Stokes equations, \eqref{incompress} and \eqref{momentum}
+around the golf ball for the flow, using a Crank-Nicholson method for the viscous terms and using
+a third order Runge-Kutta scheme for the other terms. The ball modelled has 300 dimples, a fairly
+typical configuration.
+
+The results are in good line with the behaviour we expect to see for Reynolds numbers between the
+subcritical (here $Re = 2.5\times10^4$) and supercritical ($Re = 1.1\times10^5$) regimes, finding the 
+drag crisis drop that experiments have observed.
+The authors also obtain visualisations of the flow over the ball in the two different regimes, finding
+the transition to turbulence in the boundary layer in the supercritical range and the turbulent wake 
+behind the ball.
+
+\citet{Beratlis2012Numerical} extends this work to spinning golf balls, and samples from a different
+set of Reynolds number, this time in the subcritical domain $Re = 1.7\times10^4$, during the critical
+Reynolds number drop $Re = 4.5\times10^4$ and $Re = 6.5\times10^4$, and in the supercritical section
+at $Re = 1.7\times10^5$. This study uses a more sophisticated grid setup in cylindrical coordinates,
+with a similar hybrid explicit and implicit scheme to solve the Navier-Stokes equations around the ball.
+
+The computational resources used within this study are quite considerable: as the lower Reynolds 
+number the grid size is approximately $3\times10^7$ points, and the authors estimate that each rotation
+takes $1800$ hours of cpu time to compute. By the final Reynolds number, and at highest spin, the grid
+is increased by over 5 times to approximately $1.5\times10^8$ points, and the authors estimate this
+takes $260000$ hours of cpu time to compute.
+
+These investigations find a similar result to both the experiments and the previous work in \citet{Smith2010},
+seeing all the features we would expect and following the experimental data quite closely.
+
+Finally, in \citet{Aoki2010} some numerical simulations of the flow using the FLUENT fluid dynamics
+software is undertaken. The authors only obtained a few results, and crucially only one result after
+the advent of the drag crisis. While the results they find are broadly within line with the expected
+experimental results there are too few to really validate the accuracy of the technique.
+
+Using computational fluid modelling over golf balls is still in its infancy, and there is a long way
+to go until the technique is sufficiently accurate to be able to easily model different types of ball.
+The huge computational resources required are a problem, however as computers grow more powerful and
+generally have more cores this will come within the range of researchers to quickly simulate the flow
+over a ball.
 \section{Measuring Golf Ball Trajectories}
 
-\citet{Martin2012}
+Golf ball trajectories can be measured in a number of ways, depending on the distance over which we
+wish to take the measurements. There are setups over small ranges which use cameras to track the ball
+during its flight, however these are limited in the range at which the ball can be distinguished by
+the camera.
+
+In this project, the data we have been supplied with predominantly uses Doppler radar to measure the
+full trajectory of the flight. This allows both the position of the ball over the flight to be found
+and the spin, by virtue of the use of the Doppler effect to measure the rotational motion of the ball.
+
+It is possible to also use this Doppler radar technique to estimate the $c_D$ at each point of the 
+flight, as is described in \citet{Martin2012} for the case of baseballs.
