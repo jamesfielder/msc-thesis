@@ -1,18 +1,72 @@
-This is where we discuss the main results we've had.
+If we are to be able to estimate the trajectories based on the initial conditions successfully, we
+need to be able to reliably solve the forwards problem for the trajectory of the golf ball. In order
+to do this, as stated at the end of the previous chapter, we must find an improved form for $c_D$ which
+more accurately describes the physics which occurs during the flight of a ball.
+
+There are a number of approaches to this, and we have attempted a few of them in our investigations
+in an attempt to find which of them gives the most reliable results. Any model of golf ball flight which
+captures the dynamics of an individual ball will have to use flight data to inform the exact parameters
+in a drag function for that ball. Thus, much of this chapter is also concerned with attempting to find 
+methods of estimating the parameters for such functions given data on the flight of a particular ball.
+
+This parameter estimation is an example of an inverse problem. Some generalities on such problems are
+given in the appendix.
 
 \section{Estimating $c_{D}$ from Experiments}
 
+As a first attempt at estmiating $c_D$, we began by returning to the form given in \citet{Morrison2010}
+and discussed in section \ref{sec:drag-crisis}. Recalling that we expect the dimpled surface of the
+golf ball to have the affect of moving the point at which the drag crisis occurs to lower Reynolds
+numbers, we began by taking Morrison's form for the drag and attempting to change the coefficents to
+``move'' the drop in drag to within the range seen within experiments on golf balls.
+
+Here, we attempt to match the function to the experimental data given in various papers which we
+have listed before. After some consideration, the following form of $c_D$ can be found to fit
+with a number of different experiments
+
+\begin{equation} \label{drag-m-mod}
+c_D = \frac{24}{Re} + \frac{2.6(Re/5)}{1 + (Re/5)^{1.52}} + \frac{0.38(Re/121000)^{-7.94}}{1+(Re/121000)^{-8.00}}
++ \frac{Re^{0.83}}{450000} .
+\end{equation}
+
+We believe that this form captures the physics we expect to see from the golf ball better than simply
+taking a constant value of $c_D$ as in \citet{Robinson2013}. Plotting the original and the modified
+form of $c_D$ shows how the drag has moved to within the range we expect to see.
+\begin{figure}
+% In folder Morrison
+\centering
+\includegraphics[scale=0.55]{../images/morrison-modified.png}
+\caption[Plotting the original Morrison form against a modified version for golf balls]{In blue is the
+original $c_D$ function, given in \eqref{drag-m}. In red is the modified form, \eqref{drag-m-mod}, which
+takes into account the lower value of Reynolds number where the transition to lower drag occurs.}
+\end{figure}
+
+This form has a number of limitations, but does serve to be a good initial start at working out the 
+drag for a golf ball. The weaknesses can be summarised as
 \begin{itemize}
-\item We try to find results for spheres and change them to account for the earlier drag crisis.
-\item Take the function from \citet{Morrison2010} and change the coefficents to ``move'' the drag 
-drop to lower values of $Re$.
-\item This works fairly well but cannot capture all of the behaviour, as other work shows that
-different balls should expect to see different drags \citet{Alam2011}.
+\item This form of $c_D$ is constant for all types of golf balls, which we know is not the case for
+realistic balls, as noted in \citet{Alam2011}.
+\item Changing this function for different balls is a matter of hand choosing coefficents in the terms
+of \eqref{drag-m-mod}. This method is not at all easy to modify for other balls.
+\item While the form of $c_D$ is dimensionless, as we require it to be, there is no dependence on spin
+at all, which could be causing significant contributions to the drag.
 \end{itemize}
+
+Replacing $c_D$ in the model by Robinson and Robinson by $c_D$ as defined in \eqref{drag-m-mod} does
+make a significant change to the resultant trajectory, bringing the height of the ball much closer to
+the experimental trajectories and improving the carry of the ball significantly.
+
+% \begin{itemize}
+% \item We try to find results for spheres and change them to account for the earlier drag crisis.
+% \item Take the function from \citet{Morrison2010} and change the coefficents to ``move'' the drag 
+% drop to lower values of $Re$.
+% \item This works fairly well but cannot capture all of the behaviour, as other work shows that
+% different balls should expect to see different drags \citet{Alam2011}.
+% \end{itemize}
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.45]{../images/trajectory-older.png}
+\includegraphics[scale=0.5]{../images/trajectory-older.png}
 \caption[Model with $c_{D}$ dependent on $Re$.]{Using the modified Morrison form for $c_{D}$ results 
 in a fairly accurate profile. Here red is the data and blue is the predictions of the model.}
 \end{figure}

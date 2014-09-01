@@ -115,7 +115,7 @@ three second order ones, as
 \begin{subequations}
 \begin{align}
 \dot{\vec{r}} &= \vec{v} \\
-\dot{\vec{v}} &= - \frac{1}{2}\rho A c_D |\vv - \vec{W}|(\vv - \vec{W}) + \frac{1}{2} \rho A c_L
+m \dot{\vec{v}} &= - \frac{1}{2}\rho A c_D |\vv - \vec{W}|(\vv - \vec{W}) + \frac{1}{2} \rho A c_L
 |\vv - \vec{W}| \left(\frac{\vec{\omega} \times (\vv - \vec{W})}{\omega}\right) + m \vec{g}
 \end{align}
 \end{subequations}
@@ -126,7 +126,7 @@ Solving these equations involves giving 6 initial conditions: the three coordina
 the trajectory and the components of the initial velocity.
 % -------------
 
-\subsection{An Example Trajectory}
+\subsection{An Example Trajectory} \label{rr-example}
 
 In order to show this model working, we will demonstrate solving an example problem in matlab with
 values taken from a trajectory provided by The R\&A.
@@ -222,10 +222,78 @@ of the lift force with different dependencies on the velocity of the ball.
 
 \subsection{Comparing Trajectories with Data}
 
-In order to improve upon the model by Robinson and Robinson
+In order to improve upon the model by Robinson and Robinson the first thing to do is attempt to validate
+the trajectories generated against data provided by The R\&A, and hopefully obtain some understanding
+of which model assumptions are incorrect.
+
+If we use the same initial conditions as in section \ref{rr-example} and plot this against a trajectory
+provided by The R\&A using their Doppler radar system we obtain Figure \ref{data-rr-2d}. We note that
+the model under predicts the height and range of the ball by a considerable degree.
+
+In Figure \ref{data-rr-3d} a 3D plot of this data is shown. Here we see that the model initially shows
+good agreement with the data but as the ball approaches the top of the flight the model and the data
+deviate considerably from each other, with the actual trajectory curving back towards the $y=0$ line.
+This effect is completely absent from the curve given by the Robinson and Robinson model and suggests
+that the drag or lift need significant changes in order to fit with the data.
+
+\begin{figure}
+% Generated using the code in new golf
+\centering
+\includegraphics[scale=0.45]{../images/data1-rr-2d.png}
+\caption[Plotting the data against an example Robinson and Robinson trajectory]{Here we plot the Robinson
+and Robinson model in blue against data provided by The R\&A in a dashed line. The significant change in maximum height
+and carry of the ball highlight the fact that there are significant improvements to be made to the model.}
+\label{data-rr-2d}
+\end{figure}
+
+\begin{figure}
+% Generated using the code in new golf
+\centering
+\includegraphics[scale=0.5]{../images/data1-rr-3d.png}
+\caption[Plotting the data against an example Robinson and Robinson trajectory in 3D]{Here we plot the Robinson
+and Robinson model in blue against data provided by The R\&A plotted with blue circles. While the model initially fits
+the data well, as the ball approaches the top of the flight the two curves deviate significantly.}
+\label{data-rr-3d}
+\end{figure}
+\pagebreak
+
+One hint as to the failings of this model is to plot the speed of the speed of the projectile against
+the distance along the $x$-axis, as in Figure \ref{data-rr-v}. We see that while the curves start
+together, they immediately deviate from each other. By $x=50$ the Robinson and Robinson model predicts 
+the speed to be $10\text{m}\,\text{s}^{-1}$ less than the speed obtained from the data.
+\begin{figure}
+% Also in new golf
+\centering
+\includegraphics[scale=0.56]{../images/data1-rr-v.png}
+\caption[Plot of speed in Robinson and Robinson model against the speed in the data]{Here we plot the
+speed of the projectile in solid line against the speed as measured by the radar in dashed line. Note that while
+the curves start with the same initial condition they quickly deviate from each other.}
+\label{data-rr-v}
+\end{figure}
+
+On calculating the Reynolds number for the flight, at the start of the trajectory the Reynolds number
+is approximately $1.6\times10^5$, which is just where we believe the supercritical regime begins. This
+would invalidate the assumption which Robinson and Robinson make that the drag is likely to be nearly
+constant through the entire motion of the projectile. Instead, the drag on the ball must initially be
+very different to the value which Robinson and Robinson assumes it to be throughout the flight. This
+difference accounts for the variation of the speed of the ball immediately after being hit, as the 
+drag on the real ball will be much less than the drag in the model, slowing the ball less and keeping
+the ball in the critical or supercritical Reynolds numbers for longer.
 
 % Talk about the \citet{Jensen2014Comment} comment, dimensional analysis, lead into talking about why
 % we need to improve this model to find a better form for $c_{D}$. Ppotentially a way to estimate the 
 % spin ratio. Mention how \citet{Robinson2014Reply} addresses some of the concerns of the comment but does
 % not give forms for $c_{D}$. Talk about how the golf ball is in the middle between the high and low
 % reynold limits and this will require some matching modelling to find a good form.
+
+\section{Improvements}
+
+\citet{Robinson2013} give fairly well justified reasons to take the lift to be in the form they suggest
+including referencing a number of experimental results that fit well with the form they give. Thus,
+we will focus our investigations primarily on finding a better form for the drag function on the ball,
+as this will likely yield the biggest improvements to the model.
+
+The assumption that the ball never reaches the supercritical Reynolds numbers appears, by investigation
+of the data above (and from other data sets obtained from The R\&A) seems to be false, so finding a
+functional form of $c_D$ which takes into account the drag crisis for Reynolds numbers within the
+range encountered during golf ball flight is a good starting point for investigations.
