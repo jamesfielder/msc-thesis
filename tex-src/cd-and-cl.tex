@@ -66,18 +66,36 @@ the experimental trajectories and improving the carry of the ball significantly.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.5]{../images/trajectory-older.png}
-\caption[Model with $c_{D}$ dependent on $Re$.]{Using the modified Morrison form for $c_{D}$ results 
-in a fairly accurate profile. Here red is the data and blue is the predictions of the model.}
+\includegraphics[scale=0.8]{../images/m-mod-data1.png}
+\caption[Model with using the modified Morrison form for $c_D$.]{Using the modified Morrison form for $c_{D}$ results 
+in a fairly accurate profile. Here the solid line is the model prediction 
+and the dashed line is the data.}
+\label{m-mod-data1}
 \end{figure}
+
+In Figure \ref{m-mod-data1} we see that this form of the drag function brings the model and experimental
+results into close agreement with each other. However, viewing the trajectory in 3D reveals that while
+the height and carry of the ball are predicted well, the motion along the $y$ axis is not predicted
+as well, deviating by approximately $5$m at the end of the trajectory.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.45]{../images/trajectory.png}
-\caption[Second data set with Morrison drag.]{The Morrison drag form does not always produce accurate
-results, however we do see good agreement at the start. Here red is the data and blue is the 
-predictions of the model.}
+\includegraphics[scale=0.5]{../images/m-mod-data1-3d.png}
+\caption[Model with using the modified Morrison form for $c_D$ in 3D.]{This is a 3D plot of Figure \ref{m-mod-data1}.
+We note that initially the predicted curve fits the data almost perfectly, being within 1m. Just before
+the apex of the curve however the data (plotted with circles) veers back towards the $y=0$ line, whereas
+the model (in red) does not have this behaviour.}
 \end{figure}
+
+While we see good agreement between the model and the data for this data set, running the model with
+a different set of initial conditions and using data taken with a different ball does not yeild such
+close agreement.
+
+The R\&A provided another data set, this time with 4 trajectories using the same ball. If we select
+the second trajectory to test this model against, with the following initial conditions
+\[
+x = 0, \quad y = 0, \quad z = 0, \quad v_x = 68.221, \quad v_z = 12.701, \quad v_y = -4.961 .
+\]
 
 \section{Parameterising $c_{D}$ and $c_{L}$ by Non Dimensional Variables}
 
