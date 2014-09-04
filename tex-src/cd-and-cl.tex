@@ -1,5 +1,6 @@
 If we are to be able to estimate the trajectories based on the initial conditions successfully, we
-need to be able to reliably solve the forwards problem for the trajectory of the golf ball. In order
+need to be able to reliably solve the forward problem\footnote{See section \ref{inverse} for a definition
+of a forward problem.} for the trajectory of the golf ball. In order
 to do this, as stated at the end of the previous chapter, we must find an improved form for $c_D$ which
 more accurately describes the physics which occurs during the flight of a ball.
 
@@ -92,23 +93,121 @@ a different set of initial conditions and using data taken with a different ball
 close agreement.
 
 The R\&A provided another data set, this time with 4 trajectories using the same ball. If we select
-the second trajectory to test this model against, with the following initial conditions
+the second trajectory from this data set to test to test this model against, with the following 
+initial conditions
 \[
-x = 0, \quad y = 0, \quad z = 0, \quad v_x = 68.221, \quad v_z = 12.701, \quad v_y = -4.961 .
+x = -0.112, \,\, y = 0.024, \,\, z = 0, \,\, v_x = 69.438, \,\, v_z = 9.247, \,\, v_y = -0.633, \,\,
+|\vec{\omega}| = 370.71,\,\, \theta = \frac{167\pi}{180} .
 \]
+we find (see Figure \ref{data2-2d}) that the trajectory does not match as closely as the previous data.
+
+This is not that surprinsing however: the two separate data sets are using different balls, and thus
+we would expect the $c_D$ to change between the two balls.
+
+While the modified Morrison form does give better results than simply taking $c_D$ to be constant
+it cannot possibly explain how $c_D$ varies for every ball. However, seeing that this form of the drag
+brings the model much closer in line with experimental data is encouraging, and implies that factoring
+in the drag crisis to the calculation of the model does have a major effect on the resultant trajectories
+as we expected it to do so.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{../images/data2-2d.png}
+\caption[Second data set using the modified Morrison form.]{Here the dashed line is the second data
+set and the solid line is the model using the modified Morrison form.}
+\label{data2-2d}
+\end{figure}
 
 \section{Parameterising $c_{D}$ and $c_{L}$ by Non Dimensional Variables}
 
-\begin{itemize}
-\item We follow the idea from \citet{Lieberman2001}: form $c_{D}$ and $c_{L}$ from dimensionless
-groupings and use the data to estimate the parameters in this model.
-\item Use least squares to do this. See Appendix for discussion of what an inverse problem is, how
-to use least squares to solve them, and what numerical techniques there are to do this.
-\item Find that doing this is very hard: the problem is likely not well posed and finding a minimum
-is difficult. Would benefit from a more through analysis of the least squares problem but unsure how
-this would be done.
-\item This inverse problem is a good way to move forwards with the problem in the future.
-\end{itemize}
+We now attempted a different approach: following the idea of \citet{Lieberman2001} we attempted to
+use the data from The R\&A to estimate parameters in functions of dimensionless groupings for $c_D$
+and $c_L$. 
+
+\citet{Lieberman2001} give a number of forms for $c_D$ and $c_L$. We will use the first form given in
+the patent, that is
+\begin{subequations}
+\begin{align}
+c_D &= \bar{A} + \bar{B} Sr^2 + \bar{C} Re + \bar{D} Sr \\
+\shortintertext{and}
+c_L &= \hat{A} + \hat{B} Sr + \hat{C} Re^{-2} + \hat{D} Sr^2
+\end{align}
+\end{subequations}
+where $Re$ is the Reynolds number as before, and $Sr$ is the spin ratio, defined as
+\[
+Sr = \frac{|\vec{\omega}|D}{v} .
+\]
+The spin ratio another possible dimensionless grouping, which emerges when performing the same analysis
+as section \ref{sec:drag} but with $\omega$ and $\theta$ as part of the analysis. $D$ is the diameter
+of the golf ball.
+
+The coefficents $\bar{A}, \bar{B}, \bar{C}, \bar{D}, \hat{A}, \hat{B}, \hat{C}, \hat{D}$ are to be
+determined using the data. In order to do this, we use a non linear least squares method (see appendix 
+\ref{ls}) to fit the parameters within the model to the data set at hand.
+
+In order to solve the problem we must specify an initial guess for the coefficents, before allowing
+the least squares algorithm to refine the parameters. The values for the guesses were found by 
+simply hand optimizing the functions based on typical speeds and spins for golf balls, changing the
+coefficents until the values of $c_D$ and $c_L$ became fairly close to the values we expect them to
+take from experiments.
+
+For $c_D$ we take
+\[
+\bar{A} = \bar{B} = \bar{C} = \bar{D} = 6 \times 10^{-6}
+\]
+and for $c_L$ we take
+\[
+\hat{A} = \hat{B} = \hat{C} = \hat{D} = 0.5
+\]
+as the initial guesses.
+
+Running these against the data provided by The R\&A provides mixed results. For some trajectories, 
+the fit is almost perfect in all three dimensions as we see in Figure~\ref{ls-data2-1-2d} and 
+Figure~\ref{ls-data2-1-3d}. However,
+when using the same ball with different initial conditions we sometimes obtain worse fits, which do not match
+as well as the previous data set, for example Figure~\ref{ls-data2-3-2d}. For some of the data sets
+the least squares algorithm with the guesses as above cannot fit the data at all, as the new values 
+of the parameters estimated render the equations of motion impossible to integrate using the standard routines within
+MATLAB and the guesses must be changed to proceed with this data set. This implies that the model
+is incredibly sensative to the choice of initial conditions 
+
+Additionally, when comparing the 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{../images/ls-data2-1-2d.png}
+\caption[Least squares using the Re and Sr form on data]{Here we plot the least squares fit using
+the $c_D$ and $c_L$ from \citet{Lieberman2001} in solid line against the data set it was fitted to
+in dashed line.}
+\label{ls-data2-1-2d}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.55]{../images/ls-data2-1-3d.png}
+\caption[Least squares using the Re and Sr form on data in 3D]{Here we plot the data and trajectory from
+Figure~\ref{ls-data2-1-2d} in 3D. Note how close the red model curve has almost identical carry and shape to the thick blue data points.}
+\label{ls-data2-1-3d}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{../images/ls-data2-3-2d.png}
+\caption[Trajectory which least squares struggles to fit]{Attempting to fit the $c_D$ and $c_L$ from
+\citet{Lieberman2001} works slightly less well for this trajectory than for Figure~\ref{ls-data2-1-2d}.}
+\label{ls-data2-3-2d}
+\end{figure}
+
+% \begin{itemize}
+% \item We follow the idea from \citet{Lieberman2001}: form $c_{D}$ and $c_{L}$ from dimensionless
+% groupings and use the data to estimate the parameters in this model.
+% \item Use least squares to do this. See Appendix for discussion of what an inverse problem is, how
+% to use least squares to solve them, and what numerical techniques there are to do this.
+% \item Find that doing this is very hard: the problem is likely not well posed and finding a minimum
+% is difficult. Would benefit from a more through analysis of the least squares problem but unsure how
+% this would be done.
+% \item This inverse problem is a good way to move forwards with the problem in the future.
+% \end{itemize}
 
 \section{$\tanh$ Matching}
 

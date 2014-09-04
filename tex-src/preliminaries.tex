@@ -17,7 +17,7 @@ complex model.
 
 Consider motion in a 2 dimensional plane, labelled by $x$ along the horizontal and $y$ along the vertical.
 A projectile is given an initial speed of the form $\vv_0 = (v_x, v_y)$. We set the origin of the coordinate system to be the point at the start of the
-trajectory, $(x_0, y_0) = (0,0)$. In this problem the acceleration on the projectile, after the initial
+trajectory, $(x_0, y_0) = (0,0)$. In this problem the acceleration $(a_x,a_y)$ on the projectile, after the initial
 impulse, is constant and of the form
 \begin{equation} \label{grav}
 a_x = 0, \quad a_y = -g
@@ -33,8 +33,8 @@ v^2 &= v_0^2 + 2ax \\
 x &= \left(\frac{v_0 + v}{2}\right) t .
 \end{align}
 \end{subequations}
-Where $v$ is the speed at a time $t$, $x$ is the distance from the origin of the coordinate system,
-$a$ is the acceleration and $v_0$ is the initial speed.
+Here $v = |\vv|$ is the speed at a time $t$, $x$ is the distance from the origin of the coordinate system,
+$a$ is the component of the acceleration vector under consideration and $v_0 = |\vv_0|$ is the initial speed.
 
 We will write the equations in component form along the axes. Let $\vv_0$ be the initial velocity.
 In component form these will be
@@ -45,7 +45,7 @@ along the $x$-axis and
 \[
 v_{0y} = v_0 \sin \alpha
 \]
-where $v_0 = |\vv_0|$ and $\alpha$ is the angle $\vv_0$ makes with the $x$-axis. Now using \eqref{grav}
+where $\alpha$ is the angle $\vv_0$ makes with the $x$-axis. Now using \eqref{grav}
 and \eqref{v} we may find
 \begin{subequations} \label{proj-v}
 \begin{align}
@@ -105,14 +105,15 @@ as before. All other equations remain the same.
 \section{Basic Aerodynamics}
 
 Of course, the flight of a golf ball is inevitably affected by aerodynamics. As such we need to have
-some understanding of how aerodynamic effects will . In particular, we will need to understand how boundary layers
-form on and separate from the surface of the golf ball and how this effects the drag on the ball.
+some understanding of how aerodynamic effects will manifest themselves during the flight of the ball. 
+In particular, we will need to understand how boundary layers
+form on and separate from the surface of the golf ball and how this effects the lift and drag on the ball.
 First we will review some basic fluid mechanics.
 
 \subsection{Fluid Mechanics}
 
-In this project we will model the air flowing around the ball as being an incompressible fluid. This
-is an Eulerian description of fluid flow, viewing the fluid as though the ball is fixed in the centre
+In this project we will model the air flowing around the ball as being an incompressible fluid. We will
+consider an Eulerian description of fluid flow, viewing the motion as though the ball is fixed in the centre
 of the coordinate system and the fluid moving around the ball \citet{Ruban2014}.
 
 We will not concern ourselves with a full discussion of fluid mechanics from basic principles here, 
@@ -123,9 +124,9 @@ Let $\vv$ be the fluid velocity, which is a function of the the position $\rvec$
 coordinate system and of time $t$. Let $\rho$ be the density of the fluid and $p$ the pressure. 
 We define the material derivative to be (as a differential operator)
 \begin{equation} \nonumber
-\frac{D}{Dt} = \frac{\partial}{\partial t} + (\vv \cdot \nabla)
+\frac{D}{Dt} = \frac{\partial}{\partial t} + (\vv \cdot \nabla) .
 \end{equation}
-and represents the rate of change of some quantity within the fluid, while moving with a small element
+This derivative represents the rate of change of some quantity within the fluid, while moving with a small element
 of the fluid flow. That is, in a description where the fluid moves relative to the coordinate system
 the material derivative measures the rate of change as seen by a moving fluid element.
 
@@ -162,7 +163,7 @@ for the velocity and pressure fields within an incompressible fluid. It is well 
 equations are highly non-linear and exceedingly difficult to solve both analytically and numerically,
 except in special circumstances.
 
-From solutions the Navier-Stokes equations emerges a number of fascinating effects within fluid 
+From solutions of the Navier-Stokes equations emerges a number of fascinating effects within fluid 
 dynamics. In this project, we are particularly interested in boundary layer effects and turbulence.
 
 \subsection{Non Dimensional Variables and the Reynolds Number}
@@ -176,7 +177,7 @@ fundamental ideas such as length or mass. We desire this for two main reasons:
 	Non-dimensionalising the problem ensures that this is the case.
 	\item Using non-dimensional variables allow problems of different scales to be compared to each 
 	other on an equal footing. Often the points when the physical behaviour of the system changes 
-	will depend on some non-dimensional parameter, as we will see with turbulence later \citet{jensen2013introducing}.
+	will depend on some non-dimensional parameter, as we will see with turbulence later.
 \end{itemize}
 
 Additionally, analysing the fundamental dimensions of a physical problem can yield information on the
@@ -200,7 +201,7 @@ Time & $T$
 Any quantities of interest can be written using these variables: for example, an area $A$ would have 
 the dimensions $[A] = L^2$ and a velocity $[V] = L/T$.
 
-Physical laws can, in general, be written as \citet{0143-0807-31-4-019}
+Physical laws can, in general, be written as, \citet{0143-0807-31-4-019}
 \begin{equation} \label{functional}
 q_{0} = f(q_1,q_2,\ldots,q_n)
 \end{equation}
@@ -220,16 +221,27 @@ We will demonstrate this technique in section~\ref{sec:drag}.
 
 One of the aims of dimensional analysis is to find groupings of physical quantities which are
 dimensionless. These have useful properties of scale invariance which leads to natural parameterisations
-for physical problems.
+for physical problems. A key result in finding such dimensionless groupings is the Buckingham $\pi$ 
+theorem, which states the following:
+
+\begin{bucktheorem}[Buckingham $\pi$]
+Consider a physical law in the form of \eqref{functional}. Let there be $n$ parameters $q_1,q_2,\ldots,q_n$,
+and $k$ fundamental units in which these parameters may be written. Then there exist $n-k$ dimensionless
+parameters $\pi_i$ which satisfy
+\[
+F(\pi_1, \ldots, \pi_{n-k}) = 0
+\]
+for some function $F$.
+\end{bucktheorem}
 
 Within fluid mechanics one such dimensionless grouping which manifests often is the Reynolds
 number, defined as 
 \begin{equation} \label{re-number}
-Re = \frac{\rho \vv L}{\mu} .
+Re = \frac{\rho v L}{\mu} .
 \end{equation}
-For a sphere, $\vv, \mu$ and $\rho$ are defined as they have already been in this text, and the
+For a sphere, $v, \mu$ and $\rho$ are defined as they have already been in this text, and the
 characteristic length $L$ is defined to be the diameter of the sphere.
-This quantity represents the ratio of inertial forces to viscous ones, and we will make considerable
+The Reynolds number represents the ratio of inertial forces to viscous ones, and we will make considerable
 use of it within the project. The Reynolds number, in some ways, can be considered to be a non
 dimensional analogue of the velocity, taking into account the intrinsic length scale of the problem
 under consideration.
@@ -238,25 +250,23 @@ under consideration.
 
 One of the fundamental ideas within fluid mechanics is that of the no slip condition. The no slip 
 condition specifies that when a fluid encounters a solid body it must, at the surface of the body,
-take the velocity and temperature of that body. This means that there will be a thin layer of fluid
-around the body where the velocity changes from that of the overall stream to match the velocity of
-the solid body: this layer is referred to as the boundary layer.
+take the velocity and temperature of that body. 
+
+The concept of the boundary layer was introduced by Ludwig Prandtl in 1904 at the International
+Mathematics Congress. Initially the utility of the ideas Prandtl presented were not appreciated, however
+Prandtl's ideas have shaped fluid mechanics in the century after his work was presented.
+
+For high Reynolds numbers the flow can be divided into two portions: the free stream flow where the
+fluid moves quickly and viscous effects are unimportant, and a thin layer of fluid around the body 
+called the boundary layer where viscous effects come into play. The origin of this thin layer of fluid
+is the no slip condition: at the surface of the body the fluid must take the velocity of the body itself.
+However, as we move away from the body the fluid very quickly returns to the free stream velocity. The
+domain over which this rapid change in velocity occurs is the boundary layer.
 
 The equations which govern the flow within the boundary layer are a simplified version of the
 Navier-Stokes equations, taking into account the order of magnitude of the boundary layer compared to
 the size of the body. The derivation of these equations completed by scaling the Navier-Stokes 
 based on the assumption that the boundary layer is much smaller than the body size \citet{anderson}.
-
-In 2D these equations look as follows:
-\begin{subequations}
-\begin{align}
-\pd{u}{x} + \pd{v}{y} &= 0 &\text{(Continuity equation)} \\
-u\pd{u}{x} + v\pd{u}{y} &= -\frac{1}{\rho} \pd{p}{x} +
-\nu \spd{u}{y} &\text{($x$ momentum)} \\
-\frac{1}{\rho} \pd{p}{y} &= 0 &\text{($y$ momentum)}
-\end{align}
-\end{subequations}
-where $\nu$ is the kinematic viscosity, defined as $\nu = \mu / \rho$.
 
 Boundary layer theory has been hugely important in the development of aerodynamics, taking previously
 intractable problems and facilitating a better understanding of the fluid dynamics of bodies 
@@ -268,28 +278,26 @@ as we will see later.
 In order to go beyond modelling golf ball flight as simply that of a projectile we must understand 
 how the lift and drag forces affect the flight of the ball. We can use dimensional analysis arguments
 to obtain a functional form for these effects. Here we follow the analysis of 
-\citet{jensen2013introducing} in order to demonstrate the analysis for the drag force. The lift is
-found in a similar way.
+\citet{0143-0807-31-4-019} and \citet{anderson} in order to demonstrate the analysis for the drag force. 
+The lift is found in a similar way.
 
 One first must ask what physical terms we would expect the drag to have a dependency on. We would
 expect some dependency on the velocity $v$ of the object through the fluid, on the shape of the body and
 a characteristic length scale $r$ for the body, on the density of the fluid $\rho$, and finally on
-the viscosity of the fluid $\nu$. As noted in \citet{jensen2013introducing} we have no dependency from
-the mass of the body on the drag. As per the rest of this project we also assume the fluid is
-incompressible.
+the viscosity of the fluid $\nu$.
 
 Forming an equation in the style of \eqref{functional} between these quantities and the drag force 
 $D$ we obtain
 \begin{equation} \label{drag-dimensions}
-D = g \, v^{\alpha} r^{\beta} \rho^{\gamma} \nu^{\delta}
+D = k f(v, r, \rho, \nu)
 \end{equation}
-where $g$ is a dimensionless constant which will take into account the shape of the body and
+where $k$ is a dimensionless constant which will take into account the shape of the body and
 potentially other dimensionless parameters such as the Reynolds number \eqref{re-number}.
 
 We attempt to obtain values of $\alpha, \beta, \gamma, \delta$ which balances \eqref{drag-dimensions}.
 The dimensions of the quantities in \eqref{drag-dimensions} are as follows:
 \begin{equation} \nonumber
-[D] = M L T^{-1}, \qquad [v] = L T^{-1}, \qquad [r] = L, \qquad [\rho] = M L^{-3}, \qquad [\nu] = M L^{-1} T^{-1}
+[D] = M L T^{-2}, \qquad [v] = L T^{-1}, \qquad [r] = L, \qquad [\rho] = M L^{-3}, \qquad [\nu] = M L^{-1} T^{-1}
 \end{equation}
 and so balancing \eqref{drag-dimensions} implies that
 \begin{equation}
@@ -307,43 +315,39 @@ given by
 \end{subequations}
 for $M, L$ and $T$ respectively.
 
-Using these equations we can eliminate all but one of the parameters, and writing all these in terms
+Using these equations we can eliminate all but one of the parameters, and by application of the Buckingham
+$\pi$ theorem we expect that there will be $4-3=1$ dimensionless parameters. Writing all these in terms
 of $\delta$ we can find
 \begin{align}
-D &= g v^{2-\delta} r^{2-\delta} \rho^{1-\delta} \nu^{\delta} \\
+D &= k v^{2-\delta} r^{2-\delta} \rho^{1-\delta} \nu^{\delta} \\
 \shortintertext{and rearranging these powers}
-D &= g \rho r^2 v^2 \left(\frac{\nu}{\rho r v}\right)^{\delta} .
+D &= k \rho r^2 v^2 \left(\frac{\nu}{\rho r v}\right)^{\delta} .
 \end{align}
-We can then recognise that the term in the brackets is $1/Re$. Following \citet{jensen2013introducing}
-we can derive, using a similar analysis, that $g$ must also have some functional dependency on the
-Reynolds number, and as such
+We can then recognise that the term in the brackets is $1/Re$. Since the Reynolds number is raised to
+an arbitrary power $\delta$ we can include the constant $k$ and the $Re^{-\delta}$ into one functional
+form, $f(Re)$, which accounts for the dimensionless factor. Writing into this form gives
 \begin{equation} \label{drag-functional}
-D = \rho r^2 v^2 f(Re) .
+D = f(Re) \rho r^2 v^2 .
 \end{equation}
-The form of $f$ depends on the velocity of the body moving through the fluid. 
+Notice that now we have $[D] = [\rho r^2 v^2] = MLT^{-2}$ as we expect. 
+The form of $f$ depends on the velocity of the body moving through the fluid.
 
-In the low velocity limits of low and high velocity we find slightly different forms for the dependence 
-on velocity. In the low velocity limit, the dependency on velocity is only linear, that is
+There are two separate cases of drag which occur in nature. The low Reynolds number case and the
+high Reynolds number case. In this project we will be concerned with the high Reynolds number case,
+where drag takes the form of \eqref{drag-functional}. However, in the low Reynolds number case the form
+of the drag is \citet{0143-0807-31-4-019}
 \begin{equation}
-D = g \nu r v .
+D = k \nu r v
 \end{equation}
-where $g$ is simply related to the shape of the body. This is known as stokes drag, corresponding to
-laminar flow about the body.
-Whereas in the high velocity limit we would expect turbulent flow behind the body. This is the case
-which manifests during the flight of a golf ball, and the distinction will be important later.
-\begin{equation} \label{turb-drag}
-D = g \rho r^2 v^2
-\end{equation}
+which is known as Stokes drag. We will not consider this form in this project.
 
-On comparison with \eqref{drag-functional} we see that at low velocity, $f(Re) \propto Re^{-1}$
-and in the high velocity case $f(Re)$ is independent of $Re$.
-
-Within the literature related to fluid dynamics and aerodynamics \eqref{turb-drag} is normally written
+Within the literature related to fluid dynamics and aerodynamics \eqref{drag-functional} is normally written
 with different names for the variables, namely 
 \begin{equation} \label{drag}
 F_{D} = \frac{1}{2} \rho \vv^2 A c_{D}
 \end{equation}
-where $F_{D}$ is the drag force, and $c_{D}$ is the dimensionless drag coefficient. Is it this form
+where $F_{D}$ is the drag force, and $c_{D}$ is the dimensionless drag coefficient which depends on 
+the Reynolds number. It is this form
 we will use from here on. 
 
 An expression for the lift can be derived using very similar analysis, and has the same form as the
@@ -352,16 +356,33 @@ drag:
 F_{L} = \frac{1}{2} \rho \vv^2 A c_{L}
 \end{equation}
 where here $c_{L}$ is the lift coefficient.
-\subsection{Boundary Layer Separation and the Magnus Effect}
+
+\subsection{Boundary Layer Separation}
+
+Boundary layer separation is a phenomena whereby the boundary layer of an object ``peels'' away from
+the body and forms a wake behind the body. The idea of boundary layer separation was also introduced
+by Prandtl in 1904 at the same time as presenting his initial work on boundary layers.
+
+The mechanism by which this occurs is the flow in the 
+boundary layer moving against an adverse pressure gradient. As the fluid in the boundary layer moves
+against the adverse pressure gradient, the speed of the fluid slows until eventually coming to a
+complete stop and then proceeding back in the direction it arrived. At this point the fluid moves away
+from the body, expanding the boundary layer at the separation
+point beyond the usual thickness of the layer.
+
+The fluid which has detached from the body then begins to form vortices in the wake behind the body,
+increasing the drag on the body considerably as the pressure at the front and back of the body changes
+considerably.
+
+\subsection{The Magnus Effect}
 
 In addition to the drag forces which we have discussed in the previous section, there is another
 major effect from the motion of the fluid on golf ball trajectories: the Magnus effect. The Magnus
 effect is caused by the spin of the ball moving through the fluid medium, and accounts for large
 deviations from a trajectory not considering the effect \citet{Seifert2012}.
 
-In the Magnus effect, the boundary layer around the spinning body separates (in some literature this
-is called detaching instead) from the body and forms
-a wake behind the body.
+In the Magnus effect, the boundary layer around the spinning body separates from the body at different
+points and forms a wake behind the body which does not point in the direction of motion.
 \begin{figure}[h]
 \centering
 \begin{subfigure}{.3\textwidth}
@@ -406,25 +427,27 @@ ball.}
 
 The points at which the boundary layer separates from the body at the top and
 bottom of the ball make a significant difference to the direction in which the wake will point: if
-the boundary layer at the top of the ball separates later than the bottom (see a in Figure \ref{separation}) then we will have a positive Magnus effect, and the lift will be increased. In the opposite case, 
+the boundary layer at the top of the ball separates later than the bottom (see Figure \ref{separation}a) 
+then we will have a positive Magnus effect, and the lift will be increased. In the opposite case, 
 where the bottom separates later than the top, we will have a negative Magnus effect 
-(see b in Figure \ref{separation}) and the lift on the ball will be decreased or potentially act to
+(see Figure \ref{separation}b) and the lift on the ball will be decreased or potentially act to
 push the ball further towards the ground.
 
 The fluid behind the rotating sphere will become turbulent as the sphere leaves a gap which the wake
 refills as it passes. This mechanism is important while modelling the golf ball later, as the size
 of the turbulent wake will affect the drag on the ball.
 
-The streamlines over the ball can be visualised as such
+In Figure \ref{magnus} we see a representation of the streamlines over a sphere. Here we have laminar
+flow in the boundary layer. However this is not always the case, if the flow is turbulent within the boundary
+layer before separation the drag can change considerably. 
+
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.45]{../images/magnus.pdf}
 \caption[A diagram of the Magnus effect]{A diagram of the Magnus force on a rotating sphere.
 Adapted from \url{http://en.wikipedia.org/wiki/File:Sketch_of_Magnus_effect_with_streamlines_and_turbulent_wake.svg}.}
+\label{magnus}
 \end{figure}
-
-In this diagram we have lamina flow in the boundary layer over the ball. However, this is not always
-the case: when the flow becomes turbulent the drag can change considerably.
 
 \subsection{The Drag Crisis} \label{sec:drag-crisis}
 
@@ -435,10 +458,8 @@ becoming turbulent and the wake behind the ball, as described before, becoming s
 compared to the size of the ball.
 
 Modelling this transition to turbulence is incredibly difficult, even for smooth spheres, and is 
-incredibly difficult for the case of a dimpled golf ball. While there are some hints towards progress 
-in finding analytic solutions for this transition to turbulence for a smooth sphere 
-\citet{Assis2010Analytical},
-we must make do with measurements from experiments to get some idea of how this works.
+incredibly difficult for the case of a dimpled golf ball. We must make do with measurements from 
+experiments to understand the behaviour of $c_D$ as the Reynolds number varies.
 
 In \citet{Morrison2010} all experimental data for the drag on a smooth sphere is combined to give a
 formula for the drag in the Reynolds number range $Re = 1$ to $Re = 10^6$. This combined
@@ -447,22 +468,29 @@ form exhibits the drag crisis drop at around $Re = 2\times10^5$ experiments have
 c_D = \frac{24}{Re} + \frac{2.6(Re/5)}{1 + (Re/5)^{1.52}} + \frac{0.411(Re/263000)^{-7.94}}{1+(Re/263000)^{-8.00}}
 + \frac{Re^{0.8}}{461000} .
 \end{equation}
-
+using experimental results found from \citet{schlichting1968boundary}.
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.6]{../images/morrison-drag.png}
+\includegraphics[scale=0.7]{../images/morrison-drag.png}
 \caption[Plot of the Morrison drag formula]{A plot of the Morrison drag formula from $Re = 10^3$ to
 $Re=10^6$. Note the sudden drop in drag at around $Re = 2\times10^5$ as expected.}
 \end{figure}
 
 For a golf ball, the presence of dimples on the surface of the ball serves to reduce the Reynolds
-number at which the drag crisis occurs \citet{Alam2011}, moving the range of speeds where the golf
+number at which the drag crisis occurs \citet{Bearman1976}, moving the range of speeds where the golf
 ball is in the low drag (supercritical) region to within the capability of a human golfer to hit. This
 vast reduction in drag makes a large difference to the flight of a ball, and we will need to account
 for this affect in any model we form.
 
+The mechanism by which this reduction in drag occurs is the boundary layer around the body becoming 
+turbulent. This turbulence delays boundary layer separation (keeping the layer on the body closer to
+the back) and thus reduces the size of the wake which results when the boundary layer separates. Reducing
+the size of the wake has the effect of reducing the pressure difference between the front of the body
+and the back, overall reducing the drag.
+
 The configuration of the dimples on the ball also has a large effect on the values of $Re$ at which 
-the drag crisis occurs, and the value of $c_D$ at either side of the drop \citet{Naruo2014}. There is
+the drag crisis occurs, and the value of $c_D$ at either side of the drop \citet{Naruo2014}. The dimples
+serve to introduce vortices, and thus encourage turbulence, at a lower value of Reynolds number. There is
 a large variation between particular type of ball (see Figure 3 in \citet{Naruo2014}), which mean that
 individual balls can likely be characterised simply in terms of their drag function.
 
@@ -496,7 +524,7 @@ These two goals are virtually at opposite ends from each other and thus means th
 a good golf ball for all ranges of speed in a typical game is very difficult.
 
 There are a number of papers exclusively on experimental measurements of drag and lift on golf balls, 
-for example \citet{Kharlamov2007Magnus}, \citet{Naruo2014}, \citet{Kray2012} and \citet{Aoki2010}.
+for example \citet{Bearman1976}, \citet{Kharlamov2007Magnus}, \citet{Naruo2014}, \citet{Kray2012} and \citet{Aoki2010}.
 All of these papers show evidence for the drag crisis at lower Reynolds number than a smooth sphere,
 and for the Magnus effect on on flight. \citet{Aoki2010} gives a value for the transition to the
 supercritical drag regime as $Re = 0.5\times10^5$ which is slightly lower than the values given in
@@ -519,7 +547,7 @@ can have large effects on the lift on the ball and thus the resultant trajectory
 authors attempt a strategy with a ball with smaller dimples placed between the normal sized dimples
 a standard golf ball. They report a increase in the carry of the ball of approximately 8m. While we will not 
 investigate into the dimpling on the ball, it is interesting to see the directions that golf ball
-technology may advance in in the future.
+technology may advance in the future.
 
 \subsection{Computational Simulations of Golf Ball Flight}
 
@@ -560,10 +588,11 @@ Reynolds number drop $Re = 4.5\times10^4$ and $Re = 6.5\times10^4$, and in the s
 at $Re = 1.7\times10^5$. This study uses a more sophisticated grid setup in cylindrical coordinates,
 with a similar hybrid explicit and implicit scheme to solve the Navier-Stokes equations around the ball.
 
-The computational resources used within this study are quite considerable: as the lower Reynolds 
-number the grid size is approximately $3\times10^7$ points, and the authors estimate that each rotation
-takes $1800$ hours of cpu time to compute. By the final Reynolds number, and at highest spin, the grid
-is increased by over 5 times to approximately $1.5\times10^8$ points, and the authors estimate this
+The computational resources used within this study are quite considerable: at the lowest Reynolds 
+number considered the grid size is approximately $3\times10^7$ points, and the authors estimate that each rotation
+takes $1800$ hours of cpu time to compute. By the final and largest Reynolds number considered, and at 
+highest spin, the grid is increased by over 5 times to approximately $1.5\times10^8$ points, 
+and the authors estimate this
 takes $260000$ hours of cpu time to compute.
 
 These investigations find a similar result to both the experiments and the previous work in \citet{Smith2010},
@@ -579,6 +608,7 @@ to go until the technique is sufficiently accurate to be able to easily model di
 The huge computational resources required are a problem, however as computers grow more powerful and
 generally have more cores this will come within the range of researchers to quickly simulate the flow
 over a ball.
+
 \section{Measuring Golf Ball Trajectories}
 
 Golf ball trajectories can be measured in a number of ways, depending on the distance over which we
@@ -592,3 +622,19 @@ and the spin, by virtue of the use of the Doppler effect to measure the rotation
 
 It is possible to also use this Doppler radar technique to estimate the $c_D$ at each point of the 
 flight, as is described in \citet{Martin2012} for the case of baseballs.
+
+\section{Summary}
+
+The fluid dynamics occurring during golf ball flight is highly complex, with a number of different affects 
+present during the flight. We have considered only the main affects on a spinning sphere which
+manifest themselves during golf ball flight. There are other phenomena which could be discussed, 
+for example the Basset force, which we have not considered.
+
+Understanding the form which $c_D$ and $c_L$ take for a golf ball is a large part of this project.
+From the fluid mechanics we have considered in chapter we note that we will expect these functions
+to depend on the Reynolds number, and for the lift to additionally have some dependency on $\omega$ the
+angular velocity of the ball.
+
+Understanding the exact nature of the fluid mechanics on each and every ball is still incredibly
+difficult with the turbulent flow over the ball. As such, any parametrisations of the golf ball
+characteristics will inevitably be an approximation to the true nature of how this system works.

@@ -4,7 +4,11 @@ or characterise a ball by the lift and drag functions we find,
 obtaining a model for the forces acting on the ball during the flight is advisable. 
 
 Here, we follow the paper by \citet{Robinson2013}, which builds a model of the flight based on simple principles as
-we desire. This model does neglect some of the subtlety of the fluid dynamics we have discussed,
+we desire. The equations described within \citet{Robinson2013} are not new however: very similar
+equations appear in \citet{Bearman1976}. However, the analysis and presentation in \citet{Robinson2013}
+is particularly clear, so we will use this as our starting point.
+
+This model does neglect some of the subtlety of the fluid dynamics we have discussed,
 but is a useful starting point for the analysis.
 
 \section{A Model for Golf Ball Flight}
@@ -39,7 +43,7 @@ The authors give a form for $c_D$ based on the spin of the ball
 \begin{equation}
 c_D = 0.3 + 2.58\times10^{-4}\omega
 \end{equation}
-where $\omega$ is the modulus of $\vec{\omega}$ the spin vector, in radians per second. This is obtained 
+where $\omega$ is the modulus of $\vec{\omega}$ the angular velocity vector, in radians per second. This is obtained 
 from experimental results found by
 \citet{davies1949aerodynamics}. However, the authors elect to take $c_D = 0.45$, rationalising that
 this simplification is most suited to the range of spins and speeds which golf balls are likely to
@@ -50,7 +54,7 @@ for $c_D$.
 
 \citeauthor*{Robinson2013} make the following assumptions for the lift on the golf ball:
 \begin{itemize}
-\item The direction of the lift for is perpendicular to both $\omega$ and $\vv$, that is $\vec{F}_{L} \propto \omega \times \vv$.
+\item The direction of the lift for is perpendicular to both $\vec{\omega}$ and $\vv$, that is $\vec{F}_{L} \propto \vec{\omega} \times \vv$.
 \item The lift is not a function of the drag.
 \end{itemize}
 
@@ -85,17 +89,17 @@ the ball is moving with velocity $\vec{v} = \vv - \vec{W}$ with respect to the a
 
 By considering a force balance on the golf ball in flight, the authors obtain
 \begin{equation}
-m \ddot{\vec{r}} = {\color{blue} - \frac{1}{2}\rho A c_D |\vv - \vec{W}|(\vv - \vec{W})} + {\color{ForestGreen} \frac{1}{2} \rho A c_L
-|\vv - \vec{W}| \left(\frac{\vec{\omega} \times (\vv - \vec{W})}{\omega}\right)} + {\color{YellowOrange}m \vec{g}} .
+m \ddot{\vec{r}} = \underbrace{- \frac{1}{2}\rho A c_D |\vv - \vec{W}|(\vv - \vec{W})}_{1} + \underbrace{\frac{1}{2} \rho A c_L
+|\vv - \vec{W}| \left(\frac{\vec{\omega} \times (\vv - \vec{W})}{\omega}\right)}_{2} + \underbrace{m \vec{g}}_{3} .
 \end{equation}
 Where $\vec{r}$ is the position vector from the origin, taking the $z$-axis to be facing upwards, and $x$ and $y$ in the plane with the ground. The dot here means the time derivative. 
-The three terms here are coloured by their origin:
-\begin{itemize}
-\item In blue is the drag term accounting for the action of the wind.
-\item In green is the lift term, written in terms of cross products, accounting for the action of
+The three terms here are numbered by their origin:
+\begin{enumerate}
+\item The drag term accounting for the action of the wind.
+\item The lift term, written in terms of cross products, accounting for the action of
 the wind.
-\item In yellow is the action of gravity on the ball, with $\vec{g} = (0,0,-g)^{T}$.
-\end{itemize}
+\item The action of gravity on the ball, with $\vec{g} = (0,0,-g)^{T}$.
+\end{enumerate}
 
 If we write these into their respective components we obtain, expanding the cross product terms into
 the components of vectors
@@ -119,12 +123,18 @@ m \dot{\vec{v}} &= - \frac{1}{2}\rho A c_D |\vv - \vec{W}|(\vv - \vec{W}) + \fra
 |\vv - \vec{W}| \left(\frac{\vec{\omega} \times (\vv - \vec{W})}{\omega}\right) + m \vec{g}
 \end{align}
 \end{subequations}
-This rewriting allows an implementation of the equations which may be solved using the standard
+This rewriting allows an implementation of the equations which may be integrated using the standard
 differential equation solvers within MATLAB.
 
-Solving these equations involves giving 6 initial conditions: the three coordinates at the start of
-the trajectory and the components of the initial velocity.
-% -------------
+Solving these equations involves giving 6 initial conditions and 3 parameters: the three coordinates at the start of
+the trajectory, the components of the initial velocity, $\rho = 1.22 \text{kg}\,\text{m}^{-3}$ in air,
+the diameter of the ball ($D = 42.67$mm\footnote{This is the size of the largest ball allowed by The R\&A,
+as was stated in the introduction.}), and the angular velocity vector of the ball. 
+
+We will also assume that $\omega_x = 0$, that is the rotation of the ball is always
+``towards'' the $x$-axis and thus only $\omega_y$ and $\omega_z$ are none zero. We will specify these 
+components as $\omega_y = |\vec{\omega}| \cos \theta$ and $\omega_z = |\vec{\omega}| \sin \theta$ where $\theta$
+is an angle measuring the tilt of the spin axis from the $x$-$y$ plane.
 
 \subsection{An Example Trajectory} \label{rr-example}
 
@@ -133,30 +143,24 @@ values taken from a trajectory provided by The R\&A.
 
 Here, we take the following initial conditions
 \[
-x = 0, \quad y = 0, \quad z = 0, \quad v_x = 68.221, \quad v_z = 12.701, \quad v_y = -4.961 .
+x = 0, \,\, y = 0, \,\, z = 0, \,\, v_x = 68.221, \,\, v_z = 12.701, \,\, v_y = -4.961, \,\, |\vec{\omega}| = 271.44, \,\, \theta = \frac{169\pi}{180}
 \]
-and the components of the wind to be negligible (setting all the components to zero).
 
 In figure \ref{2d-test-rr} we plot the range ($x$-axis) against the height of the the golf ball during
 the flight. There are several encouraging features within this plot: the height and range are within
 the bounds set by considering the ball as a projectile and completely negating the affect of drag, and
 the shape of the trajectory is not simply that of a parabola, implying that the lift and drag are changing how
 the ball flies.
-\begin{figure}[h]
+\begin{figure}
 % This figure is called new-golf right now
 \centering
-\includegraphics[scale=0.37]{../images/rr_traj_basic.png}
+\includegraphics[scale=0.6]{../images/rr_traj_basic.png}
 \caption[2D plot of an example Robinson and Robinson model trajectory]{Here we plot the distance of the
 golf ball against the height, using the basic \citeauthor*{Robinson2013} model to calculate the trajectory.}
 \label{2d-test-rr}
 \end{figure}
 
-In figure \ref{3d-test-rr} we display a 3 dimensional plot of the trajectory. Here we notice that 
-the spin of the ball influences the movement in the $y$ plane fairly considerably, adding a deviation
-from a standard projectile which we would not predict by projectile motion alone. This is the action
-of the spin on the trajectory.
-
-\begin{figure}[h]
+\begin{figure}
 % Also in new-golf
 \centering
 \includegraphics[scale=0.4]{../images/3d-rr.png}
@@ -165,24 +169,19 @@ Figure \ref{2d-test-rr}, showing the deviation due to the spin of the ball in th
 \label{3d-test-rr}
 \end{figure}
 
-\pagebreak
-% Describe the model, provide diagrams, show basic runs.
-
-% Model is a good comprimise between simplicity and flexibility. Can plug in new drag coefficents.
-% Some parts of the model are purely heurestic like the form for the lift, others seem just plain wrong.
-% The overall structure is good though. Compare basic run to data, show similar shape but incorrect
-% carry.
+In figure \ref{3d-test-rr} we display a 3 dimensional plot of the trajectory. Here we notice that 
+the spin of the ball influences the movement in the $y$ plane fairly considerably, adding a deviation
+from a standard projectile which we would not predict by projectile motion alone. This is the action
+of the spin on the trajectory.
 
 \section{Limitations of the Model}
 
-While the model given by \citet{Robinson2013} is a good start, it is not without flaws. The authors
+Whilst the model given by \citet{Robinson2013} is a good start, it is not without flaws. The authors
 themselves admit that there are a number of points where the model could potentially be improved
 \begin{itemize}
 \item The model only takes into account a positive Magnus effect, but if the separation points were
 to move to a different position on the ball this form would no longer apply.
-\item The constant value of $c_D$ is rather troubling, particularly considering there is some experimental
-evidence that the golf ball does reach the critical and supercritical domain during the course of an
-average golf ball flight.
+\item Given the earlier analysis in this text, the constant value of $c_D$ is rather troubling.
 \item The form of $c_D$ and $c_L$ have no dependency on Reynolds number at all, which contradicts previous
 analysis.
 \item The spin of the ball is assumed constant throughout the flight. The authors state that in most
@@ -190,7 +189,7 @@ situations the loss of spin is low enough to be ignored, citing some evidence th
 significant proportion. This assumption is also presented in \citet{Lieberman2001}, where the simple
 differential equation
 \[
-\dot{\omega} = -0.00002
+\dot{\vec{\omega}} = -0.00002 \frac{\vec{\omega} v}{r}
 \]
 is used to model the spin decay. This constant is so small as to cause almost no change in spin over
 the flight, and as such we will not concern ourselves with modelling spin decay.
@@ -199,7 +198,6 @@ the flight, and as such we will not concern ourselves with modelling spin decay.
 The authors do state, however, that building dependency on speed and spin into their model would be
 possible with the analysis they have performed, allowing these limitations to be addressed without 
 drastically changing the form of the resultant equations.
-
 
 The lack of any dependency on speed is addressed within \citet{Jensen2014Comment} by means of dimensional
 analysis. Jensen uses a similar analysis to the previous section on drag to determine that if $c_L$ is
@@ -230,21 +228,21 @@ If we use the same initial conditions as in section \ref{rr-example} and plot th
 provided by The R\&A using their Doppler radar system we obtain Figure \ref{data-rr-2d}. We note that
 the model under predicts the height and range of the ball by a considerable degree.
 
-In Figure \ref{data-rr-3d} a 3D plot of this data is shown. Here we see that the model initially shows
-good agreement with the data but as the ball approaches the top of the flight the model and the data
-deviate considerably from each other, with the actual trajectory curving back towards the $y=0$ line.
-This effect is completely absent from the curve given by the Robinson and Robinson model and suggests
-that the drag or lift need significant changes in order to fit with the data.
-
 \begin{figure}
 % Generated using the code in new golf
 \centering
-\includegraphics[scale=0.45]{../images/data1-rr-2d.png}
+\includegraphics[scale=0.4]{../images/data1-rr-2d.png}
 \caption[Plotting the data against an example Robinson and Robinson trajectory]{Here we plot the Robinson
 and Robinson model in blue against data provided by The R\&A in a dashed line. The significant change in maximum height
 and carry of the ball highlight the fact that there are significant improvements to be made to the model.}
 \label{data-rr-2d}
 \end{figure}
+
+In Figure \ref{data-rr-3d} a 3D plot of this data is shown. Here we see that the model initially shows
+good agreement with the data but as the ball approaches the top of the flight the model and the data
+deviate considerably from each other, with the actual trajectory curving back towards the $y=0$ line.
+This effect is completely absent from the curve given by the Robinson and Robinson model and suggests
+that the drag or lift need significant changes in order to fit with the data.
 
 \begin{figure}
 % Generated using the code in new golf
@@ -255,9 +253,8 @@ and Robinson model in blue against data provided by The R\&A plotted with blue c
 the data well, as the ball approaches the top of the flight the two curves deviate significantly.}
 \label{data-rr-3d}
 \end{figure}
-\pagebreak
 
-One hint as to the failings of this model is to plot the speed of the speed of the projectile against
+One hint as to the failings of this model is to plot the speed of the projectile against
 the distance along the $x$-axis, as in Figure \ref{data-rr-v}. We see that while the curves start
 together, they immediately deviate from each other. By $x=50$ the Robinson and Robinson model predicts 
 the speed to be $10\text{m}\,\text{s}^{-1}$ less than the speed obtained from the data.
@@ -277,7 +274,7 @@ would invalidate the assumption which Robinson and Robinson make that the drag i
 constant through the entire motion of the projectile. Instead, the drag on the ball must initially be
 very different to the value which Robinson and Robinson assumes it to be throughout the flight. This
 difference accounts for the variation of the speed of the ball immediately after being hit, as the 
-drag on the real ball will be much less than the drag in the model, slowing the ball less and keeping
+drag on the real ball is much less than the model drag, slowing the ball less and keeping
 the ball in the critical or supercritical Reynolds numbers for longer.
 
 % Talk about the \citet{Jensen2014Comment} comment, dimensional analysis, lead into talking about why
@@ -286,7 +283,7 @@ the ball in the critical or supercritical Reynolds numbers for longer.
 % not give forms for $c_{D}$. Talk about how the golf ball is in the middle between the high and low
 % reynold limits and this will require some matching modelling to find a good form.
 
-\section{Improvements}
+\section{Summary and Improvements}
 
 \citet{Robinson2013} give fairly well justified reasons to take the lift to be in the form they suggest
 including referencing a number of experimental results that fit well with the form they give. Thus,
@@ -296,4 +293,11 @@ as this will likely yield the biggest improvements to the model.
 The assumption that the ball never reaches the supercritical Reynolds numbers appears, by investigation
 of the data above (and from other data sets obtained from The R\&A) seems to be false, so finding a
 functional form of $c_D$ which takes into account the drag crisis for Reynolds numbers within the
-range encountered during golf ball flight is a good starting point for investigations.
+range encountered during golf ball flight is a good starting point for investigations. Indeed, within
+\citet{Lieberman2001} the $c_D$ is also taken to be dependent on Reynolds number and other
+dimensionless parameters related to the spin. However, we will focus simply on dependency on Reynolds
+number.
+
+Overall, the model given in \citet{Robinson2013} seems to be a good starting point for understanding
+the forces on the ball and finding trajectories, being similar in nature to the results found in previous
+works such as \citet{Bearman1976}.
