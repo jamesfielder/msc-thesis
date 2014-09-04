@@ -13,12 +13,12 @@ methods of estimating the parameters for such functions given data on the flight
 This parameter estimation is an example of an inverse problem. Some generalities on such problems are
 given in the appendix.
 
-\section{Estimating $c_{D}$ from Experiments}
+\section{Estimating $c_{D}$ from Experiments} \label{morrison}
 
-As a first attempt at estmiating $c_D$, we began by returning to the form given in \citet{Morrison2010}
+As a first attempt at estimating $c_D$, we began by returning to the form given in \citet{Morrison2010}
 and discussed in section \ref{sec:drag-crisis}. Recalling that we expect the dimpled surface of the
 golf ball to have the affect of moving the point at which the drag crisis occurs to lower Reynolds
-numbers, we began by taking Morrison's form for the drag and attempting to change the coefficents to
+numbers, we began by taking Morrison's form for the drag and attempting to change the coefficients to
 ``move'' the drop in drag to within the range seen within experiments on golf balls.
 
 Here, we attempt to match the function to the experimental data given in various papers which we
@@ -47,7 +47,7 @@ drag for a golf ball. The weaknesses can be summarised as
 \begin{itemize}
 \item This form of $c_D$ is constant for all types of golf balls, which we know is not the case for
 realistic balls, as noted in \citet{Alam2011}.
-\item Changing this function for different balls is a matter of hand choosing coefficents in the terms
+\item Changing this function for different balls is a matter of hand choosing coefficients in the terms
 of \eqref{drag-m-mod}. This method is not at all easy to modify for other balls.
 \item While the form of $c_D$ is dimensionless, as we require it to be, there is no dependence on spin
 at all, which could be causing significant contributions to the drag.
@@ -89,7 +89,7 @@ the model (in red) does not have this behaviour.}
 \end{figure}
 
 While we see good agreement between the model and the data for this data set, running the model with
-a different set of initial conditions and using data taken with a different ball does not yeild such
+a different set of initial conditions and using data taken with a different ball does not yield such
 close agreement.
 
 The R\&A provided another data set, this time with 4 trajectories using the same ball. If we select
@@ -101,7 +101,7 @@ x = -0.112, \,\, y = 0.024, \,\, z = 0, \,\, v_x = 69.438, \,\, v_z = 9.247, \,\
 \]
 we find (see Figure \ref{data2-2d}) that the trajectory does not match as closely as the previous data.
 
-This is not that surprinsing however: the two separate data sets are using different balls, and thus
+This is not that surprising however: the two separate data sets are using different balls, and thus
 we would expect the $c_D$ to change between the two balls.
 
 While the modified Morrison form does give better results than simply taking $c_D$ to be constant
@@ -118,7 +118,7 @@ set and the solid line is the model using the modified Morrison form.}
 \label{data2-2d}
 \end{figure}
 
-\section{Parameterising $c_{D}$ and $c_{L}$ by Non Dimensional Variables}
+\section{Parametrising $c_{D}$ and $c_{L}$ by Non Dimensional Variables}
 
 We now attempted a different approach: following the idea of \citet{Lieberman2001} we attempted to
 use the data from The R\&A to estimate parameters in functions of dimensionless groupings for $c_D$
@@ -134,21 +134,21 @@ c_L &= \hat{A} + \hat{B} Sr + \hat{C} Re^{-2} + \hat{D} Sr^2
 \end{align}
 \end{subequations}
 where $Re$ is the Reynolds number as before, and $Sr$ is the spin ratio, defined as
-\[
+\begin{equation}
 Sr = \frac{|\vec{\omega}|D}{v} .
-\]
+\end{equation}
 The spin ratio another possible dimensionless grouping, which emerges when performing the same analysis
 as section \ref{sec:drag} but with $\omega$ and $\theta$ as part of the analysis. $D$ is the diameter
 of the golf ball.
 
-The coefficents $\bar{A}, \bar{B}, \bar{C}, \bar{D}, \hat{A}, \hat{B}, \hat{C}, \hat{D}$ are to be
+The coefficients $\bar{A}, \bar{B}, \bar{C}, \bar{D}, \hat{A}, \hat{B}, \hat{C}, \hat{D}$ are to be
 determined using the data. In order to do this, we use a non linear least squares method (see appendix 
 \ref{ls}) to fit the parameters within the model to the data set at hand.
 
-In order to solve the problem we must specify an initial guess for the coefficents, before allowing
+In order to solve the problem we must specify an initial guess for the coefficients, before allowing
 the least squares algorithm to refine the parameters. The values for the guesses were found by 
 simply hand optimizing the functions based on typical speeds and spins for golf balls, changing the
-coefficents until the values of $c_D$ and $c_L$ became fairly close to the values we expect them to
+coefficients until the values of $c_D$ and $c_L$ became fairly close to the values we expect them to
 take from experiments.
 
 For $c_D$ we take
@@ -168,17 +168,17 @@ when using the same ball with different initial conditions we sometimes obtain w
 as well as the previous data set, for example Figure~\ref{ls-data2-3-2d}. For some of the data sets
 the least squares algorithm with the guesses as above cannot fit the data at all, as the new values 
 of the parameters estimated render the equations of motion impossible to integrate using the standard routines within
-MATLAB and the guesses must be changed to proceed with this data set. This implies that the model
-is incredibly sensative to the choice of initial conditions 
-
-Additionally, when comparing the 
+MATLAB and the guesses must be changed to proceed with this data set. This implies that estimating $c_D$
+and $c_L$ in this way
+is incredibly sensitive to the choice of initial conditions and can only have limited utility if
+a person is required to manually change the guesses to make the model work.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.7]{../images/ls-data2-1-2d.png}
 \caption[Least squares using the Re and Sr form on data]{Here we plot the least squares fit using
 the $c_D$ and $c_L$ from \citet{Lieberman2001} in solid line against the data set it was fitted to
-in dashed line.}
+in dashed line. The parameter values for this trajectory are given in Table~\ref{ls-table} in Data set 1.}
 \label{ls-data2-1-2d}
 \end{figure}
 
@@ -190,13 +190,94 @@ Figure~\ref{ls-data2-1-2d} in 3D. Note how close the red model curve has almost 
 \label{ls-data2-1-3d}
 \end{figure}
 
+Additionally, when comparing the values of $\bar{A}, \bar{B}, \bar{C}, \bar{D}, \hat{A}, \hat{B}, \hat{C}, \hat{D}$
+between data sets taken with the same golf ball, we do not see any regularity for the resultant 
+values. The R\&A provided a data set using the same golf ball 4 times with 4 slightly different
+initial conditions. If the values of the coefficients $\bar{A}, \bar{B}, \bar{C}, \bar{D}, \hat{A}, \hat{B}, \hat{C}, \hat{D}$
+are in some way physical we would expect that between the different measurements the values would stay fairly constant
+due to being related to the physics of the ball, rather than just fitting the data and being inconsistent
+between different initial conditions. However, as we can see in Table~\ref{ls-table} this is not the case:
+the coefficients vary in sign and order of magnitude between each data set with little consistency between
+them.
+
+This implies that while it is possible to fit the model data using these forms of $c_D$ and $c_L$
+there is no physical data to be gained from using the least squares method here, and it would not
+be advisable to use the coefficients from one set of initial conditions to attempt to estimate the
+trajectory for another.
+
 \begin{figure}
 \centering
 \includegraphics[scale=0.6]{../images/ls-data2-3-2d.png}
 \caption[Trajectory which least squares struggles to fit]{Attempting to fit the $c_D$ and $c_L$ from
-\citet{Lieberman2001} works slightly less well for this trajectory than for Figure~\ref{ls-data2-1-2d}.}
+\citet{Lieberman2001} works slightly less well for this trajectory than for Figure~\ref{ls-data2-1-2d}.
+The parameter values for this trajectory are given in Table~\ref{ls-table} in Data set 3.}
 \label{ls-data2-3-2d}
 \end{figure}
+
+\begin{table}
+\footnotesize
+\centering
+\begin{tabular}{c| c c c c c c c c}
+Data set & $\bar{A}$ & $\bar{B}$ & $\bar{C}$ & $\bar{D}$ & $\hat{A}$ & $\hat{B}$ & $\hat{C}$ & $\hat{D}$ \\
+\hline
+1 & 0.2063 & 0.2211 & -19.5001 & 0.0365 & 4.6830 & 15.9221 & $-1.4540\times10^{-5}$ & -15.9351 \\
+2 & 0.0697 & 1.1092 & -14.9529 & -0.8197 & -11.1921 & -24.1217 & $3.9889\times10^{-5}$ & 28.9117 \\
+3 & 0.3963 & -1.0174 & 0.4995 & 1.9337 & -6.3150 & -15.9492 & $2.1123\times10^{-5}$ & 17.3877 \\
+4 & 0.2229 & 0.0463 & 0.4999 & 0.5278 & -0.7197 & -0.0492 & $3.0765\times10^{-6}$ & 0.4549
+\end{tabular} 
+\caption[Table of coefficients calculated by the least squares method]{The values of the coefficients 
+calculated using least squares for the 4 data sets with the same ball.
+}
+\label{ls-table}
+\end{table}
+
+Since we can fit the modelled trajectories to the data using this method it is useful to try and see
+the limitations of this technique. Therefore, we then considered using only a limited portion of 
+the data to see if the starting part of the trajectory can determine the full flight of the ball.
+
+To do this, we simply run the same least squares method as before but with a smaller data set, over
+say the first 30m of the flight. We then use the predicted coefficients in $c_D$ and $c_L$ to run a
+full flight simulation of the ball and compare this to the full data set to ascertain how accurate this
+procedure is.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{../images/ls-small-start.png}
+\caption[Using a smaller section of data in the least squares method]{Here, we plot the data in dashed
+line against the least squares fitted model in red solid line. The data used in the least squares fit
+is from $x=0$ to $x=30$ and we can see that in this portion the model and the data align perfectly. After
+this the model and data begin to deviate slightly.}
+\label{ls-small-start}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{../images/ls-small-full.png}
+\caption[Using the parameters from the small least squares run in the full model]{Here we run the model
+to the end of the trajectory using the parameters found within Figure~\ref{ls-small-start} using least
+squares. The values are wildly inaccurate in both height and carry of the ball.}
+\label{ls-small-full}
+\end{figure}
+
+For the initial portion of the data the least squares matching does very well as we can see in Figure~\ref{ls-small-start}, 
+matching the initial
+30m almost perfectly. The residual between the model and the data is very small, approximately 0.0594.
+The values of the parameters this model produces are as follows:
+\begin{gather*}
+\bar{A} = 2.2928, \,\, \bar{B} = -8.8290, \,\, \bar{C} = 0.6996, \,\, \bar{D} = -3.5440, \\
+\hat{A} = -4.0220, \,\, \hat{B} = 2.5129, \,\, \hat{C} = 1.2528\times10^{-5}, \,\, \hat{D} = 8.5804
+\end{gather*}
+
+On running the model using the values of the parameters estimated above however, it quickly becomes
+apparent that the initially good fit is only for the starting portion of the data: the values of the
+parameters given massive over estimate the trajectory, with a carry in excess of 2km as we can see in
+Figure~\ref{ls-small-full}.
+
+Using the least squares technique allows a good fit for the data to be found when using the whole trajectory,
+however estimating the parameters with a small section of the data seems to be beyond the abilities 
+of this technique to currently estimate. It may be possible to use more sophisticated numerical techniques
+or to set bounds on the parameters to obtain a more realistic set of estimates for the parameters in
+$c_D$ and $c_L$ in this form.
 
 % \begin{itemize}
 % \item We follow the idea from \citet{Lieberman2001}: form $c_{D}$ and $c_{L}$ from dimensionless
@@ -211,16 +292,105 @@ Figure~\ref{ls-data2-1-2d} in 3D. Note how close the red model curve has almost 
 
 \section{$\tanh$ Matching}
 
+As we have seen in the previous section, using least squares estimates can produce fairly convincing
+fits with the experimental data we have been using. However, the physical grounding of these parameters
+is unknown: they are simply terms which can be selected from the dimensional analysis of the drag 
+and lift functions and form a dimensionless group. There is no experimental evidence that the drag or
+lift should take this form.
+
+Thus, instead of attempting to use least squares on a drag form we do not have any physical basis for
+we will try a hybrid method between the two ideas: a drag function similar to the modified Morrison
+form we have in the first section but parametrised in such a way that we can use the least squares
+analysis to find the parameters for a particular ball.
+
+In order to do this we approximate the drag crisis and near linear portions at the subcritical and 
+supercritical Reynolds number by a $\tanh$ function of the form
+\begin{equation} \label{tanh}
+c_{D} = a + b \tanh (-c(Re - d)) .
+\end{equation}
+
+The 4 constants $a,b,c,d$ here control the size, shape and position of the drag crisis drop. In particular
 \begin{itemize}
-\item Take a hybrid approch between the two previous ideas: form a function which ``looks'' similar
-to \citet{Morrison2010} and has the same behaviour, but is parameterised in such a way as to allow
-us to use a least squares solver to estimate parameters.
-\item For the drop, use a $\tanh$ function of the form
-\[
-c_{D} = a + b \tanh (-c(Re - d))
-\]
-where $a,b,c,d$ are constants which we can use least squreas to determine.
-\item Match the $\tanh$ at the top with the $24/Re$ form we know from spheres and past the drop match
-to the weakly linear form we see from the previous work.
-\item Still trying to decide on results for this.
+\item $a$ controls the placement of the ``middle'' of the drag crisis drop. When $a=0$ the drop passes
+through the $Re = 0$ axis.
+\item $b$ controls the size of the drop. When $b=1$ and $a=0$ the drop is from $c_D = 1$ to $c_d = -1$.
+\item $c$ controls how steep the drop is. As $c$ increases the drop grows asymptotically closer to
+a step function like drop.
+\item $d$ controls the placement of the drop, effectively shifting the drop to the origin of the
+coordinate system.
 \end{itemize}
+
+Using the knowledge of how these parameters work we can choose an initial set of $a,b,c,d$ such that
+the form of \eqref{tanh} is like that of the modified Morrison drag from section~\ref{morrison}. This
+is simple enough that with a few minutes of trial and error the following values may be obtained
+\[
+a = 0.24, \quad b = 0.17, \quad c = 0.00005, \quad d = 120000 .
+\]
+These values approximate the modified form of the Morrison drag very well near the drop, as we can see
+from Figure~\ref{tanh-init}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{../images/tanh.png}
+\caption[The tanh form near the drag crisis]{The $\tanh$ function with $a,b,c,d$ defined as above plotted
+in solid line against the modified drag form plotted in dashed line.}
+\label{tanh-init}
+\end{figure}
+
+Running the model with this initial guess for the coefficients and using data set 1 we obtain a reasonable
+approximation to the trajectory as we can see in Figure~\ref{tanh-model}, although not as good as 
+we have been able to obtain with other methods.
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{../images/tanh_guess.png}
+\caption[Running the initial form of the tanh drag form]{In solid line is the model for this trajectory
+using the $\tanh$ form for the drag function. In dashed line is the data for this trajectory.}
+\label{tanh-model}
+\end{figure}
+
+If we then use least squares algorithm to estimate the parameters unfortunately the solution is not as easy to
+obtain than that using the non dimensional variables. Sometimes the solution will be obtained
+by the solver, but the height and carry of the ball will be greatly reduced as compared to the data, 
+having brought the model into closer agreement with the motion along the $y$ axis at the expense of
+the motion along $x$ and $z$. In other cases the solver struggles to find a minimum in the parameter
+space at all.
+
+This all implies that as with the previous section there is extreme sensitivity to the choice of 
+initial guess for the coefficients in \eqref{tanh}. For example, if we change $d$ in the initial 
+guess from $120000$ to $133000$ and leave all the other parameters the same, we find a much closer fit
+to the data as we can see in Figure~\ref{tanh_guess2}.
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{../images/tanh_guess2.png}
+\caption[Running the same form as Figure~\ref{tanh-model} with a different value for $d$]{This is the
+same trajectory as Figure~\ref{tanh-model} with one of the parameters in \eqref{tanh} modified.}
+\label{tanh_guess2}
+\end{figure}
+
+There are ways to proceed from here: we
+could constrain the problem to be within certain ranges of parameters. However, in doing this we
+will inevitably lose some predictive power of the model to detect the physical characteristics of the
+golf ball as we desire.
+% \begin{itemize}
+% \item Take a hybrid approch between the two previous ideas: form a function which ``looks'' similar
+% to \citet{Morrison2010} and has the same behaviour, but is parameterised in such a way as to allow
+% us to use a least squares solver to estimate parameters.
+% \item For the drop, use a $\tanh$ function of the form
+% \[
+% c_{D} = a + b \tanh (-c(Re - d))
+% \]
+% where $a,b,c,d$ are constants which we can use least squreas to determine.
+% \item Match the $\tanh$ at the top with the $24/Re$ form we know from spheres and past the drop match
+% to the weakly linear form we see from the previous work.
+% \item Still trying to decide on results for this.
+% \end{itemize}
+\section{Summary}
+
+Using least squares and more generally inverse problems techniques to estimate the parameters in 
+the drag and lift functions for golf balls shows great promise, however we have not been able to 
+adequately solve this problem within this project. Continuing this work requires a more thorough
+consideration of how to correctly estimate the parameters using inverse problems techniques.
+
+The methods presented in this chapter do show promise however: we can improve the model beyond the
+assumptions of \citet{Robinson2013} as we hoped. These open new directions which modelling golf ball
+flight can continue into in the future.
