@@ -39,11 +39,11 @@
     %pdfproducer={Producer}, % producer of the document
     pdfkeywords={Golf}{Applied Mathematics}{Mathematical Modelling}, % list of keywords
     pdfnewwindow=true,      % links in new window
-    colorlinks=true,       % false: boxed links; true: colored links
+    colorlinks=false,       % false: boxed links; true: colored links
     linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-    citecolor=Violet,        % color of links to bibliography
-    filecolor=magenta,      % color of file links
-    urlcolor=cyan           % color of external links
+    citecolor=black,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=black           % color of external links
 }
 
 % Change the equation numbering scheme
@@ -87,6 +87,8 @@
 \newcommand{\rvec}{\mathbf{r}}
 \newcommand{\acel}{\mathbf{a}}
 \newcommand{\ff}{\mathbf{f}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
 
 \newtheorem{bucktheorem}{Theorem}
 
@@ -149,6 +151,9 @@ which I would have been completely lost. Additionally, I would like to thank The
 \appendix
 \chapter{Inverse Problems and Least Squares}
 \input{../tex-src/inverse.tex}
+
+\chapter{Data Used}
+\input{../tex-src/data.tex}
 
 % % If you need more than one appendix, then just use another \chapter command
 % %\chapter{Yet Another Appendix}

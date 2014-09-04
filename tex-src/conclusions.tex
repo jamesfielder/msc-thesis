@@ -3,7 +3,33 @@ of a golf ball. In doing so we have been lead to consider the drag and lift func
 these functions contain much of the subtlety that makes golf into such a popular game for people all
 over the world.
 
-The model we have developed, and the forms of $c_D$ and $c_L$, show much promise for improvement
-in the future.
+The physical basis on which we have set this project is quite well established: as far back as
+\citet{Bearman1976} equations of motion similar to the ones given in this project have been known of
+and used successfully to calculate golf ball trajectories. The extensions to different forms of 
+$c_D$ and $c_L$ are fairly new, and more research will be needed to ascertain which if any of these
+forms are the most appropriate for the modelling of golf ball flight.
+
+The use of least squares to estimate the parameters in models of golf ball flight seems to be fairly
+novel. Unfortunately, performing these estimations seems to present a number of challenges which
+we have been unable to overcome in this work. In the future, with better understanding of the parameter
+space and how the parameters affect the resultant trajectories, these problems could well be solved.
 
 \section{Possible Future Work}
+
+There are a number of potential improvements to this project which could be investigated
+\begin{enumerate}
+\item In this project we have completely neglected to model spin reduction during the course
+of the flight of the ball. Investigating this effect could make a difference to the resultant 
+trajectories.
+\item A more comprehensive understanding how the parameters in either the \citet{Lieberman2001} form 
+for $c_D$ and $c_L$ or the $\tanh$ form change the trajectory as they differ would help to constrain
+the least squares problem and make it easier to solve.
+\item Applying more advanced inverse problems techniques to the least squares parameter estimation
+problem could also help to improve this estimation.
+\item Using more experimental data and statistical inverse problems techniques such as Monte Carlo 
+estimation to obtain a more probabilistic driven estimation for the model parameters. 
+\end{enumerate}
+
+Overall however, we feel that this project has advanced the understanding of how one might use 
+experimental data within the modelling of golf ball flight at least a little and the avenues explored
+within will hopefully present more results as more research is conducted in this area.

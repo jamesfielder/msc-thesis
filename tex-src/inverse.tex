@@ -1,19 +1,102 @@
 \section{Inverse Problems} \label{inverse}
 
-\citet{Tarantola2005,Tarantola1982}
+Inverse problems are large and active research area in their own right, and we cannot possibly give
+anything more than a very brief over view of some of their major themes here. Inverse problems
+are concerned with using measured experimental data of a physical phenomenon to estimate the values
+of parameters in a model to describe the phenomenon \citet{Tarantola2005}. 
+
+The fundamental distinction within inverse problems is between that of the forward problem and the
+inverse problem. In the forward problem, we use a set of model parameters to obtain a set predictions
+for the physical phenomena. In the case of a golf ball, this corresponds to starting with a set
+of initial conditions for the flight, and any model parameters, and then using the equations of motion
+to obtain a trajectory for the golf ball.
+
+The inverse problem is, as its name implies, the opposite to the forwards case. We start with a set of measured
+data from the real physical problem and proceed ``backwards'' to obtain the model parameters which, when
+running forwards, would give the same values as the measured data \citet{Tarantola2005,Tarantola1982}.
+Often, this aim will be all but impossible to attain: errors in measurement or in the model which
+is at use will mean it is impossible to completely match with the data. However, it is often possible
+to obtain fairly close estimates to model parameters which do fit the data.
+
+There are a number of techniques to solve inverse problems, such as probabilistic Monte Carlo methods, 
+and least squares methods. We will use least squares methods to attempt to estimate parameters in this
+project. 
 
 \section{Least Squares} \label{ls}
 
+The least squares method calculates a residual between the model predictions and the observed data.
+Here we will follow the discussion in \citet{Pujol2007} and \citet{Nocedal}.
+
+Let $f$ be function of $k$ independent variables, $v_k$, and let there be $j$ parameters $x_j$ which
+$f$ depends upon. Define the vectors $\bv$ and $\bx$ to be vectors with components $v_k$ and $x_j$
+respectively.
+
+Consider a set of observations $o_i$ corresponding to a set of variables $\bv_i$. The function $f(\bv_i, \bx)$
+is a mathematical model for the observations $o_i$ Then we have that
+\begin{equation}
+o_i \approx f(\bv_i, \bx) \equiv f_i(\bx)
+\end{equation}
+by virtue of the fact that we are attempting to model $o_i$ by $f_i$. Now, if we define the residual
+between $o_i$ and $f_i(\bx)$ as
+\begin{equation}
+r_i(\bx) = o_i - f_i(\bx)
+\end{equation}
+
+We now define $s(\bx)$ as the sum of the residuals squared, that is
+\begin{equation}
+s(\bx) = \sum_{i=1}^{m} (r_{i}(\bx))^2 .
+\end{equation}
+where $m$ is the number of data points.
+
+The derivatives of $s$ are particularly important for the the solution of least squares problems.
+We define the Jacobian matrix of the derivatives of $s(\bx)$ to be 
+\begin{equation}
+J(\bx) = \pd{r_j}{x_i} = \begin{bmatrix} \nabla r_1(\bx)^{T} \\ \nabla r_2(\bx)^{T} \\ \vdots \\ \nabla r_m(\bx)^{T} \end{bmatrix}
+\end{equation}
+where $j=1,\ldots,m$ and $x_i$ are each of the parameters. We can express the gradient and Hessian of
+$s(\bx)$ as
+\begin{equation}
+\nabla s(\bx) = J(\bx)^T r(\bx)
+\end{equation}
+for the gradient (by use of the chain rule) and the Hessian as
+\begin{equation}
+\nabla^2 s(\bx) = J(\bx)^T J(\bx) + \sum_{j=1}^{m} r_j(\bx) \nabla^2 r_j(\bx) .
+\end{equation}
+Often in such optimization problems the second term of the Hessian is not considered as it is presumed
+to be small.
+
+The least squares problem involves minimising the sum of the residuals squared. 
+There are a number of methods to do this, and we will review a few here.
+
 \subsection{Guass-Newton Method}
+
+The Gauss-Newton method is the simplest algorithm to solve a non linear least squares problem. This
+method is a hybrid method between the Newton method and gradient decent. For the parameters $\bx$ we
+solve at each iteration
+\begin{equation} \label{g-n}
+J_k^{T} J \delta \bx = - J_{k}^{T} s_k(\bx)
+\end{equation}
+where $J$ is the Jacobian, $\delta \bx$ is the new guess for the parameters and $s_k(\bx)$ is the sum
+of the residuals squared at the $k$th iteration. In order to form the $k+1$th iteration we set $\bx = \bx + \delta \bx$
+and recalculate $s_{k+1}(\bx)$ and $J_{k+1}$ by running the model forwards.
 
 \subsection{Levenberg-Marquardt Algorithm}
 
-\citet{Pujol2007}
+The Levenberg-Marquardt method of solving least squares overcomes some of the issues which the Guass-Newton
+method can have if $J$ is rank deficient or close to being so \citet{Nocedal}. Instead of solving
+\eqref{g-n} we solve the following alternative equation at each step
+\begin{equation}
+(J_{k}^T J_k + \lambda I)\delta \bx = - J_{k}^{T} s_k(\bx)
+\end{equation}
+performing the same procedure as before for each iteration. Here $\lambda \geq 0$ is a constant chosen to
+aide in the convergence of the method.
 
 \subsection{Trust Region Method}
 
-\citet{kelley1999iterative}
+A trust region method takes the Levenberg-Marquardt method and adds constraints on the possible steps
+in $\delta \bx$ by changing the value of $\lambda$ at each point in order to prevent the steps from being
+``too large'' within the parameter space. See \citet{kelley1999iterative} for a more thorough description
+of this algorithm.
 
-\section{Well Posedness and Regularization}
-
-\citet{Fang2004}
+The trust region method is the default method used by the non linear least squares solver provided
+within MATLAB which we will use in this project.
