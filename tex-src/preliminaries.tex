@@ -95,7 +95,8 @@ for the range of the projectile.
 \subsection{3D Projectile Motion}
 
 Projectile motion in 3 dimensions works in exactly the same fashion as 2D projectile motion. Here we
-will take the $z$-axis to be the vertical and $x$ and $y$ axes to be labelling the surface. The only
+will take the $z$-axis to be the vertical and $x$ and $y$ axes to be labelling the surface. After 
+relabelling the coordinates in this fashion the only
 component of acceleration is along the $z$-axis, with
 \[
 a_z = -g
@@ -175,7 +176,7 @@ fundamental ideas such as length or mass. We desire this for two main reasons:
 \begin{itemize}
 	\item Physical statements should not have any dependency on the units they are stated in.
 	Non-dimensionalising the problem ensures that this is the case.
-	\item Using non-dimensional variables allow problems of different scales to be compared to each 
+	\item Using non-dimensional variables allows problems of different scales to be compared to each 
 	other on an equal footing. Often the points when the physical behaviour of the system changes 
 	will depend on some non-dimensional parameter, as we will see with turbulence later.
 \end{itemize}
@@ -231,7 +232,7 @@ parameters $\pi_i$ which satisfy
 \[
 F(\pi_1, \ldots, \pi_{n-k}) = 0
 \]
-for some function $F$.
+for some function $F$ \citet{0143-0807-31-4-019}.
 \end{bucktheorem}
 
 Within fluid mechanics one such dimensionless grouping which manifests often is the Reynolds
@@ -265,11 +266,11 @@ domain over which this rapid change in velocity occurs is the boundary layer.
 
 The equations which govern the flow within the boundary layer are a simplified version of the
 Navier-Stokes equations, taking into account the order of magnitude of the boundary layer compared to
-the size of the body. The derivation of these equations completed by scaling the Navier-Stokes 
+the size of the body. The derivation of these equations is completed by scaling the Navier-Stokes 
 based on the assumption that the boundary layer is much smaller than the body size \citet{anderson}.
 
 Boundary layer theory has been hugely important in the development of aerodynamics, taking previously
-intractable problems and facilitating a better understanding of the fluid dynamics of bodies 
+intractable problems and facilitating a better understanding of the fluid dynamics over bodies 
 \citet{anderson}. The affect of the boundary layer will be important in the modelling of golf balls,
 as we will see later.
 
@@ -364,7 +365,7 @@ the body and forms a wake behind the body. The idea of boundary layer separation
 by Prandtl in 1904 at the same time as presenting his initial work on boundary layers.
 
 The mechanism by which this occurs is the flow in the 
-boundary layer moving against an adverse pressure gradient. As the fluid in the boundary layer moves
+boundary layer moving against an adverse pressure gradient \citet{FLM:374505}. As the fluid in the boundary layer moves
 against the adverse pressure gradient, the speed of the fluid slows until eventually coming to a
 complete stop and then proceeding back in the direction it arrived. At this point the fluid moves away
 from the body, expanding the boundary layer at the separation
@@ -599,7 +600,7 @@ These investigations find a similar result to both the experiments and the previ
 seeing all the features we would expect and following the experimental data quite closely.
 
 Finally, in \citet{Aoki2010} some numerical simulations of the flow using the FLUENT fluid dynamics
-software is undertaken. The authors only obtained a few results, and crucially only one result after
+software are undertaken. The authors only obtained a few results, and crucially only one result after
 the advent of the drag crisis. While the results they find are broadly within line with the expected
 experimental results there are too few to really validate the accuracy of the technique.
 
@@ -628,10 +629,10 @@ flight, as is described in \citet{Martin2012} for the case of baseballs.
 The fluid dynamics occurring during golf ball flight is highly complex, with a number of different affects 
 present during the flight. We have considered only the main affects on a spinning sphere which
 manifest themselves during golf ball flight. There are other phenomena which could be discussed, 
-for example the Basset force, which we have not considered.
+for example the Basset force \citet{thomas1992influence}, which we have not considered.
 
 Understanding the form which $c_D$ and $c_L$ take for a golf ball is a large part of this project.
-From the fluid mechanics we have considered in chapter we note that we will expect these functions
+From the fluid mechanics we have considered in this chapter we note that we will expect these functions
 to depend on the Reynolds number, and for the lift to additionally have some dependency on $\omega$ the
 angular velocity of the ball.
 

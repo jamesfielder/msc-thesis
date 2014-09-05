@@ -22,7 +22,7 @@ numbers, we began by taking Morrison's form for the drag and attempting to chang
 ``move'' the drop in drag to within the range seen within experiments on golf balls.
 
 Here, we attempt to match the function to the experimental data given in various papers which we
-have listed before. After some consideration, the following form of $c_D$ can be found to fit
+have listed before such as \citet{Bearman1976,Alam2011}. After some consideration, the following form of $c_D$ can be found to fit
 with a number of different experiments
 
 \begin{equation} \label{drag-m-mod}
@@ -45,7 +45,7 @@ takes into account the lower value of Reynolds number where the transition to lo
 This form has a number of limitations, but does serve to be a good initial start at working out the 
 drag for a golf ball. The weaknesses can be summarised as
 \begin{itemize}
-\item This form of $c_D$ is constant for all types of golf balls, which we know is not the case for
+\item This form of $c_D$ implies the same form for all types of golf balls, which we know is not the case for
 realistic balls, as noted in \citet{Alam2011}.
 \item Changing this function for different balls is a matter of hand choosing coefficients in the terms
 of \eqref{drag-m-mod}. This method is not at all easy to modify for other balls.
@@ -95,10 +95,10 @@ close agreement.
 The R\&A provided another data set, this time with 4 trajectories using the same ball. If we select
 the second trajectory from this data set to test to test this model against, with the following 
 initial conditions
-\[
-x = -0.112, \,\, y = 0.024, \,\, z = 0, \,\, v_x = 69.438, \,\, v_z = 9.247, \,\, v_y = -0.633, \,\,
+\begin{gather*}
+x = -0.112, \,\, y = 0.024, \,\, z = 0, \,\, v_x = 69.438, \,\, v_z = 9.247, \\ v_y = -0.633, \,\,
 |\vec{\omega}| = 370.71,\,\, \theta = \frac{167\pi}{180} .
-\]
+\end{gather*}
 we find (see Figure \ref{data2-2d}) that the trajectory does not match as closely as the previous data.
 
 This is not that surprising however: the two separate data sets are using different balls, and thus
